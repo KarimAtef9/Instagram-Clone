@@ -17,7 +17,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
-                android:src="@mipmap/ic_launcher"
                 android:id="@+id/profile_image"/>
 
             <TextView
@@ -27,7 +26,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="Username"
                 android:id="@+id/username_textview"/>
 
         </LinearLayout>
@@ -35,7 +33,6 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
             android:id="@+id/post_image"/>
 
         <RelativeLayout
@@ -76,7 +73,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:textStyle="bold"
-            android:text="9 likes"
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/likes_textview"/>
 
@@ -86,7 +82,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:textStyle="bold"
-            android:text="username"
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/publisher_textview"/>
 
@@ -95,7 +90,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:text="description"
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/description_textview"/>
 
@@ -106,7 +100,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
-            android:text="View All 9 Comments"
             android:textColor="@color/colorAccent"
             android:id="@+id/viewComments_textview"/>
 
