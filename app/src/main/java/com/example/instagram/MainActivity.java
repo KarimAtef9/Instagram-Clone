@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.add_nav:
                             selectedFragment = null;
                             startActivity(new Intent(MainActivity.this, PostActivity.class));
+                            finish();
                             break;
                         case R.id.favorite_nav:
                             selectedFragment = new NotificationFragment();

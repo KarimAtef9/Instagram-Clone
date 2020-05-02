@@ -111,10 +111,11 @@ public class PostActivity extends AppCompatActivity {
                         hashMap.put("postId", postId);
                         hashMap.put("imageUrl", url);
                         hashMap.put("description", descriptionEdittext.getText().toString());
-                        // no need for now
-                        //hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        hashMap.put("timeInMillis", System.currentTimeMillis()+"");
 
-                        reference.setValue(hashMap);
+                        // generate unique id for each post in current user
+                        reference.push().setValue(hashMap);
 
                         progressDialog.dismiss();
 
