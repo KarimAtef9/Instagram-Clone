@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.R;
@@ -24,65 +25,49 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class PostAdapter extends ArrayAdapter<Post> {
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     ArrayList<Post> postsList;
     // required for getting image
     private Context mContext;
 
-    private ImageView profile_imageview, postImage_imageview, like_imageview, comment_imageview, save_imageview;
-    private TextView username_textview, likes_textview, publisher_textview, description_textview, comments_textview;
-
     private FirebaseUser firebaseUser;
 
-
-
     public PostAdapter(Context context, ArrayList<Post> posts) {
-        super(context, 0, posts);
         this.mContext = context;
         this.postsList = posts;
     }
 
+
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItemView = convertView;
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.post_item, parent, false);
-        }
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.post_item, parent, false);
+        return new PostAdapter.ViewHolder(view);
+    }
 
-        profile_imageview = listItemView.findViewById(R.id.profile_image);
-        postImage_imageview = listItemView.findViewById(R.id.post_image);
-        like_imageview = listItemView.findViewById(R.id.like_imageview);
-        comment_imageview = listItemView.findViewById(R.id.comment_imageview);
-        save_imageview = listItemView.findViewById(R.id.save_imageview);
-
-        username_textview = listItemView.findViewById(R.id.username_textview);
-        likes_textview = listItemView.findViewById(R.id.likes_textview);
-        publisher_textview = listItemView.findViewById(R.id.publisher_textview);
-        description_textview = listItemView.findViewById(R.id.description_textview);
-        comments_textview = listItemView.findViewById(R.id.viewComments_textview);
-
+    @Override
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Post post = postsList.get(position);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // update post specs
-        Glide.with(mContext).load(post.getImageUrl()).into(postImage_imageview);
+        Glide.with(mContext).load(post.getImageUrl()).into(holder.postImage_imageview);
         if (post.getDescription().equals("")) {
-            description_textview.setVisibility(View.GONE);
+            holder.description_textview.setVisibility(View.GONE);
         } else {
-            description_textview.setText(post.getDescription());
+            holder.description_textview.setText(post.getDescription());
         }
-        updatePublisherInfo(post.getPublisher());
+        updatePublisherInfo(post.getPublisher(), holder.username_textview,
+                holder.publisher_textview, holder.profile_imageview);
 
-        update_LikeButton_NoLikes(post.getPostId());
-        updateNumberofLikes(post.getPostId());
+        update_LikeButton_NoLikes(post.getPostId(), holder.like_imageview);
+        updateNumberOfLikes(post.getPostId(), holder.likes_textview);
 
-        like_imageview.setOnClickListener(new View.OnClickListener() {
+        holder.like_imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // like post
-                if (like_imageview.getTag().equals("like")) {
+                if (holder.like_imageview.getTag().equals("like")) {
                     FirebaseDatabase.getInstance().getReference()
                             .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).setValue(true);
                 } else {
@@ -92,12 +77,39 @@ public class PostAdapter extends ArrayAdapter<Post> {
                 }
             }
         });
-
-
-        return listItemView;
     }
 
-    private void updatePublisherInfo(final String userId) {
+    @Override
+    public int getItemCount() {
+        return postsList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView profile_imageview, postImage_imageview, like_imageview, comment_imageview, save_imageview;
+        public TextView username_textview, likes_textview, publisher_textview, description_textview, comments_textview;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            profile_imageview = itemView.findViewById(R.id.profile_image);
+            postImage_imageview = itemView.findViewById(R.id.post_image);
+            like_imageview = itemView.findViewById(R.id.like_imageview);
+            comment_imageview = itemView.findViewById(R.id.comment_imageview);
+            save_imageview = itemView.findViewById(R.id.save_imageview);
+
+            username_textview = itemView.findViewById(R.id.username_textview);
+            likes_textview = itemView.findViewById(R.id.likes_textview);
+            publisher_textview = itemView.findViewById(R.id.publisher_textview);
+            description_textview = itemView.findViewById(R.id.description_textview);
+            comments_textview = itemView.findViewById(R.id.viewComments_textview);
+
+
+        }
+    }
+
+
+    private void updatePublisherInfo(final String userId, final TextView username_textview,
+                                     final TextView publisher_textview, final ImageView profile_imageview) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -117,7 +129,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
     }
 
     // update like button whether this post liked or not && update number of likes
-    private void update_LikeButton_NoLikes(String postId) {
+    private void update_LikeButton_NoLikes(String postId, final ImageView like_imageview) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -139,7 +151,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         });
     }
 
-    private void updateNumberofLikes(String postId) {
+    private void updateNumberOfLikes(String postId, final TextView likes_textview) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override

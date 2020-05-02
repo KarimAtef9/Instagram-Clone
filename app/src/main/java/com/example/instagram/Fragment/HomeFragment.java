@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ import java.util.Comparator;
 
 
 public class HomeFragment extends Fragment {
-    private ListView postsListView;
+    private RecyclerView postsRecycleView;
     private PostAdapter postAdapter;
     private ArrayList<Post> postsList;
 
@@ -44,11 +45,17 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        postsListView = view.findViewById(R.id.posts_listView);
+        postsRecycleView = view.findViewById(R.id.posts_recycleView);
+        postsRecycleView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        postsRecycleView.setLayoutManager(linearLayoutManager);
+
         postsList = new ArrayList<>();
         followingList = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), postsList);
-        postsListView.setAdapter(postAdapter);
+        postsRecycleView.setAdapter(postAdapter);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -60,7 +67,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    // fill followingList with users who i follo
+    // fill followingList with users who i follow
     private void fillFollowingList() {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("Follow").child(firebaseUser.getUid()).child("Following");
@@ -80,7 +87,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 
     private void readPosts() {
 
@@ -110,8 +116,6 @@ public class HomeFragment extends Fragment {
                         return o1.getTimeInMillis().compareTo(o2.getTimeInMillis());
                     }
                 });
-                // to get new on top
-                Collections.reverse(postsList);
                 postAdapter.notifyDataSetChanged();
             }
 
