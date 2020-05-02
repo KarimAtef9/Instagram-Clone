@@ -30,8 +30,24 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new HomeFragment()).commit();
+        // open commenter profile if clicked (sent from comment adapter)
+        Bundle intent = getIntent().getExtras();
+        if (intent != null) {   // opening other user profile from comments
+            String publisherId = intent.getString("publisherId");
+
+            SharedPreferences.Editor e = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+            e.putString("profileId", publisherId);
+            e.apply();
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment()).commit();
+        } else {
+            // open my profile
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment()).commit();
+        }
+
+
 
     }
 

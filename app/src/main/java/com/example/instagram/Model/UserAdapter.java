@@ -82,6 +82,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             }
         });
 
+        // follow and unfollow depending on current case
         followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

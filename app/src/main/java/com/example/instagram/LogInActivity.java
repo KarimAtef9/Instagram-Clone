@@ -83,7 +83,7 @@ public class LogInActivity extends AppCompatActivity {
                                     .child("Users").child(userId);
 
 
-                            // l7d dlw2ty el goz2 da malosh lazma bs lesa odam -------------------------------------------------------------------------
+                            // auto forward to main page on successful login
                             databaseReference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

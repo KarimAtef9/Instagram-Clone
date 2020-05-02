@@ -1,6 +1,7 @@
 package com.example.instagram.Model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,10 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagram.CommentActivity;
 import com.example.instagram.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -60,9 +61,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         updatePublisherInfo(post.getPublisher(), holder.username_textview,
                 holder.publisher_textview, holder.profile_imageview);
 
-        update_LikeButton_NoLikes(post.getPostId(), holder.like_imageview);
-        updateNumberOfLikes(post.getPostId(), holder.likes_textview);
+        // update below image items (likes comments buttons...)
+        update_LikeButton_NoLikes(post.getPostId(), holder.like_imageview, holder.likes_textview);
+        updateNumberOfComments(post.getPostId(), holder.comments_textview);
 
+        // like & unlike post
         holder.like_imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +78,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     FirebaseDatabase.getInstance().getReference()
                             .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).removeValue();
                 }
+            }
+        });
+
+        // go to comments through comment button or view comments text
+        holder.comment_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postId", post.getPostId());
+                intent.putExtra("publisherId", post.getPublisher());
+                mContext.startActivity(intent);
+
+            }
+        });
+        holder.comments_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postId", post.getPostId());
+                intent.putExtra("publisherId", post.getPublisher());
+                mContext.startActivity(intent);
+
             }
         });
     }
@@ -129,7 +154,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     // update like button whether this post liked or not && update number of likes
-    private void update_LikeButton_NoLikes(String postId, final ImageView like_imageview) {
+    private void update_LikeButton_NoLikes(String postId,
+                                           final ImageView like_imageview, final TextView likes_textview) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -142,6 +168,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     like_imageview.setImageResource(R.drawable.ic_like);
                     like_imageview.setTag("like");
                 }
+                long likesCount = dataSnapshot.getChildrenCount();
+                if (likesCount == 1)
+                    likes_textview.setText(likesCount +" like");
+                else
+                    likes_textview.setText(likesCount +" likes");
             }
 
             @Override
@@ -151,12 +182,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
-    private void updateNumberOfLikes(String postId, final TextView likes_textview) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
+
+    // update number of comments
+    private void updateNumberOfComments(String postId, final TextView comments_textview) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postId);
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                likes_textview.setText(dataSnapshot.getChildrenCount() +" likes");
+                long commentsCount = dataSnapshot.getChildrenCount();
+                if (commentsCount == 0) {
+                    comments_textview.setVisibility(View.GONE);
+                } else if (commentsCount == 1) {
+                    comments_textview.setVisibility(View.VISIBLE);
+                    comments_textview.setText("View " + dataSnapshot.getChildrenCount() + " comment");
+                } else {
+                    comments_textview.setVisibility(View.VISIBLE);
+                    comments_textview.setText("View all " + dataSnapshot.getChildrenCount() + " comments");
+                }
             }
 
             @Override
@@ -165,5 +208,4 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
     }
-
 }

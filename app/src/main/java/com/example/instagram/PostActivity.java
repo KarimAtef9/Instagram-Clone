@@ -112,6 +112,7 @@ public class PostActivity extends AppCompatActivity {
                         hashMap.put("imageUrl", url);
                         hashMap.put("description", descriptionEdittext.getText().toString());
                         hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        // to sort posts according to time
                         hashMap.put("timeInMillis", System.currentTimeMillis()+"");
 
                         // generate unique id for each post in current user

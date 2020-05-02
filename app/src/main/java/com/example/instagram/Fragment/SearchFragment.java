@@ -60,6 +60,8 @@ public class SearchFragment extends Fragment {
 
         readAllUsers();
 
+        // TODO : empty seach gives all users for debug purpose
+        // begin search on entering any input
         search_edittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
