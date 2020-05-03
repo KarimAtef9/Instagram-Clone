@@ -67,6 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         // update below image items (likes comments buttons...)
         update_LikeButton_NoLikes(post.getPostId(), holder.like_imageview, holder.likes_textview);
         updateNumberOfComments(post.getPostId(), holder.comments_textview);
+        updateSaveButton(post.getPostId(), post.getPublisher(), holder.save_imageview);
 
         // like & unlike post
         holder.like_imageview.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +104,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 intent.putExtra("publisherId", post.getPublisher());
                 mContext.startActivity(intent);
 
+            }
+        });
+
+        // save and un-save posts
+        holder.save_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.save_imageview.getTag().equals("save")) {
+                    // save post in database as Saves - my id - publisher id - post id
+                    FirebaseDatabase.getInstance().getReference("Saves")
+                            .child(firebaseUser.getUid()).child(post.getPostId())
+                            .child(post.getPublisher()).setValue(true);
+                } else {
+                    FirebaseDatabase.getInstance().getReference("Saves")
+                            .child(firebaseUser.getUid()).child(post.getPostId())
+                            .child(post.getPublisher()).removeValue();
+                }
             }
         });
 
@@ -227,6 +245,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 } else {
                     comments_textview.setVisibility(View.VISIBLE);
                     comments_textview.setText("View all " + commentsCount + " comments");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // update save button (image view)
+    private void updateSaveButton(final String postId, final String publisherId, final ImageView save_iv) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Saves").child(firebaseUser.getUid()).child(postId).child(publisherId);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // already saved
+                    save_iv.setImageResource(R.drawable.ic_save_black);
+                    save_iv.setTag("saved");
+                } else {
+                    // press to save
+                    save_iv.setImageResource(R.drawable.ic_saved);
+                    save_iv.setTag("save");
                 }
             }
 

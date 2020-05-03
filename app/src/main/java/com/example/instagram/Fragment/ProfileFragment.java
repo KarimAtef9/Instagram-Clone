@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.contentcapture.DataRemovalRequest;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.Model.PhotoInProfileAdapter;
@@ -33,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 public class ProfileFragment extends Fragment {
@@ -42,9 +46,16 @@ public class ProfileFragment extends Fragment {
     private Button edit_btn;
     private ImageButton photos_ibtn, saved_ibtn;
 
-    RecyclerView photosRecyclerView;
-    PhotoInProfileAdapter profilePhotosadapter;
-    ArrayList<Post> postsList;
+    private RecyclerView photosRecyclerView;
+    private PhotoInProfileAdapter profilePhotosadapter;
+    private ArrayList<Post> postsList;
+
+    private ArrayList<Pair<String, String>> savedPostsPubIds;   // first publisher id second post id
+
+    private RecyclerView savesRecyclerView;
+    private PhotoInProfileAdapter savesPhotosadapter;
+    private ArrayList<Post> savedPostsList;
+
 
     private FirebaseUser firebaseUser;
 
@@ -79,7 +90,7 @@ public class ProfileFragment extends Fragment {
         photos_ibtn = view.findViewById(R.id.myPhotos_imageBtn);
         saved_ibtn = view.findViewById(R.id.saved_imageBtn);
 
-
+        // main profile posts recycle view
         photosRecyclerView = view.findViewById(R.id.photos_recycleview);
         photosRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
@@ -88,6 +99,18 @@ public class ProfileFragment extends Fragment {
         profilePhotosadapter = new PhotoInProfileAdapter(getContext(), postsList);
         photosRecyclerView.setAdapter(profilePhotosadapter);
 
+        // saved posts recycle view
+        savesRecyclerView = view.findViewById(R.id.saved_recycleview);
+        savesRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager savesLinearLayoutManager = new GridLayoutManager(getContext(), 3);
+        savesRecyclerView.setLayoutManager(savesLinearLayoutManager);
+        savedPostsList = new ArrayList<>();
+        savesPhotosadapter = new PhotoInProfileAdapter(getContext(), savedPostsList);
+        savesRecyclerView.setAdapter(savesPhotosadapter);
+
+        photosRecyclerView.setVisibility(View.VISIBLE);
+        savesRecyclerView.setVisibility(View.GONE);
+
 
         // update bars info
         updateProfileInfo();
@@ -95,6 +118,8 @@ public class ProfileFragment extends Fragment {
         updatePostsNo();
         // read photos in profile
         readProfilePhotos();
+        // load saved posts
+        readSavedPosts();
 
         if (profileId.equals(firebaseUser.getUid())) {
             // my profile
@@ -134,7 +159,21 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
+        // showing my posts or saved posts
+        photos_ibtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                photosRecyclerView.setVisibility(View.VISIBLE);
+                savesRecyclerView.setVisibility(View.GONE);
+            }
+        });
+        saved_ibtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                photosRecyclerView.setVisibility(View.GONE);
+                savesRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -258,4 +297,64 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+    /* fill savedPostsIds with ids of posts i saved
+        and then read these posts from database calling readSaved
+     */
+    private void readSavedPosts() {
+        savedPostsPubIds = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves")
+                .child(firebaseUser.getUid());
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // post i saved by j
+                    String postId = snapshot.getKey();
+                    for (DataSnapshot ss : snapshot.getChildren()) {
+                        String publisher = ss.getKey();
+                        savedPostsPubIds.add(new Pair<>(postId, publisher));
+                    }
+                }
+                readSaved();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    // read saved posts using savedPostsId list
+    private void readSaved() {
+
+        savedPostsList.clear();
+
+        for (Pair pubPostId : savedPostsPubIds) {
+            String postId = (String) pubPostId.first;
+            String publisher = (String) pubPostId.second;
+            FirebaseDatabase.getInstance().getReference("Posts")
+                    .child(publisher).child(postId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Post post = dataSnapshot.getValue(Post.class);
+                        savedPostsList.add(post);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+        // no need for sorting as we need them in the order they were saved
+        savesPhotosadapter.notifyDataSetChanged();
+    }
+
 }
