@@ -116,7 +116,7 @@ public class PostActivity extends AppCompatActivity {
                         hashMap.put("timeInMillis", System.currentTimeMillis()+"");
 
                         // generate unique id for each post in current user
-                        reference.push().setValue(hashMap);
+                        reference.child(postId).setValue(hashMap);
 
                         progressDialog.dismiss();
 

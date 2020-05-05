@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
     private PhotoInProfileAdapter profilePhotosadapter;
     private ArrayList<Post> postsList;
 
-    private ArrayList<Pair<String, String>> savedPostsPubIds;   // first publisher id second post id
+    private ArrayList<SavedPost> savedPostData;   // first publisher id second post id
 
     private RecyclerView savesRecyclerView;
     private PhotoInProfileAdapter savesPhotosadapter;
@@ -298,9 +298,10 @@ public class ProfileFragment extends Fragment {
 
     /* fill savedPostsIds with ids of posts i saved
         and then read these posts from database calling readSaved
+        sort the result posts according to save time not publish time
      */
     private void readSavedPosts() {
-        savedPostsPubIds = new ArrayList<>();
+        savedPostData = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves")
                 .child(firebaseUser.getUid());
 
@@ -312,9 +313,20 @@ public class ProfileFragment extends Fragment {
                     String postId = snapshot.getKey();
                     for (DataSnapshot ss : snapshot.getChildren()) {
                         String publisher = ss.getKey();
-                        savedPostsPubIds.add(new Pair<>(postId, publisher));
+                        String timeInM = ss.getValue().toString();
+
+                        savedPostData.add(new SavedPost(postId, publisher,timeInM));
                     }
                 }
+//                // sort according to save time
+                Collections.sort(savedPostData, new Comparator<SavedPost>() {
+                    @Override
+                    public int compare(SavedPost o1, SavedPost o2) {
+                        return o1.getTimeInMillis().compareTo(o2.getTimeInMillis());
+                    }
+                });
+                // just reverse to get last first
+                Collections.reverse(savedPostData);
                 readSaved();
             }
 
@@ -331,9 +343,9 @@ public class ProfileFragment extends Fragment {
 
         savedPostsList.clear();
 
-        for (Pair pubPostId : savedPostsPubIds) {
-            String postId = (String) pubPostId.first;
-            String publisher = (String) pubPostId.second;
+        for (SavedPost savedPost : savedPostData) {
+            String postId = savedPost.getPostId();
+            String publisher = savedPost.getPublisherId();
             FirebaseDatabase.getInstance().getReference("Posts")
                     .child(publisher).child(postId).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -351,8 +363,32 @@ public class ProfileFragment extends Fragment {
             });
 
         }
-        // no need for sorting as we need them in the order they were saved
+        // no need for sorting as we sorted them in the order they were saved
         savesPhotosadapter.notifyDataSetChanged();
+    }
+
+    private class SavedPost {
+        String postId;
+        String publisherId;
+        String timeInMillis;
+
+        SavedPost(String id, String pub, String time) {
+            this.postId = id;
+            this.publisherId = pub;
+            this.timeInMillis = time;
+        }
+
+        public String getPostId() {
+            return postId;
+        }
+
+        public String getPublisherId() {
+            return publisherId;
+        }
+
+        public String getTimeInMillis() {
+            return timeInMillis;
+        }
     }
 
 }

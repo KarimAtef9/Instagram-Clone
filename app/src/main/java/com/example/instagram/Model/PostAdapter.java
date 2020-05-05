@@ -6,10 +6,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -117,7 +115,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     // save post in database as Saves - my id - publisher id - post id
                     FirebaseDatabase.getInstance().getReference("Saves")
                             .child(firebaseUser.getUid()).child(post.getPostId())
-                            .child(post.getPublisher()).setValue(true);
+                            .child(post.getPublisher()).setValue(System.currentTimeMillis());
                 } else {
                     FirebaseDatabase.getInstance().getReference("Saves")
                             .child(firebaseUser.getUid()).child(post.getPostId())
