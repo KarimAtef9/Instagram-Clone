@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.CommentActivity;
+import com.example.instagram.Fragment.PostDetailsFragment;
 import com.example.instagram.Fragment.ProfileFragment;
 import com.example.instagram.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
-    ArrayList<Post> postsList;
+    private ArrayList<Post> postsList;
     // required for getting image
     private Context mContext;
 
@@ -145,6 +147,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
                 ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new ProfileFragment()).commit();
+            }
+        });
+
+        // open post when click on image
+        holder.postImage_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("postId", post.getPostId());
+                editor.putString("publisherId", post.getPublisher());
+                editor.apply();
+
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PostDetailsFragment()).commit();
             }
         });
 
