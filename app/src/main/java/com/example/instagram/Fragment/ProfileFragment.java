@@ -1,6 +1,7 @@
 package com.example.instagram.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagram.EditProfileActivity;
 import com.example.instagram.Model.PhotoInProfileAdapter;
 import com.example.instagram.Model.Post;
 import com.example.instagram.Model.User;
@@ -135,7 +136,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (edit_btn.getText().equals("Edit Profile")) {
-                    // edit my profile
+                    startActivity(new Intent(getContext(), EditProfileActivity.class));
                 } else if (edit_btn.getText().equals("Follow")) {
                     FirebaseDatabase.getInstance().getReference().child("Follow")
                             .child(firebaseUser.getUid()).child("Following")
@@ -183,6 +184,10 @@ public class ProfileFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (getActivity() == null) {
+                    // needed to wait until profile image uploaded if changed (EditProfileActivity)
+                    return;
+                }
                 User user = dataSnapshot.getValue(User.class);
                 Glide.with(getContext()).load(user.getImageUrl()).into(profileImage_iv);
                 username_tv.setText(user.getUsername());

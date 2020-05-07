@@ -45,6 +45,8 @@ dependencies {
     // downloading and Displaying images
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+
     // used in posting image
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
