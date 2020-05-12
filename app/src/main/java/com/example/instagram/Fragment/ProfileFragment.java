@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 
 public class ProfileFragment extends Fragment {
@@ -145,6 +146,8 @@ public class ProfileFragment extends Fragment {
                     FirebaseDatabase.getInstance().getReference().child("Follow")
                             .child(profileId).child("Followers")
                             .child(firebaseUser.getUid()).setValue(true);
+
+                    addNotification();
                 } else if (edit_btn.getText().equals("Following")) {
                     // already friends, then un-friend
                     FirebaseDatabase.getInstance().getReference().child("Follow")
@@ -394,6 +397,19 @@ public class ProfileFragment extends Fragment {
         public String getTimeInMillis() {
             return timeInMillis;
         }
+    }
+
+    private void addNotification() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(profileId);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", firebaseUser.getUid());
+        hashMap.put("note", "started following you");
+        hashMap.put("posterId", "");
+        hashMap.put("postId", "");
+        hashMap.put("isPost", false);
+
+        reference.push().setValue(hashMap);
     }
 
 }

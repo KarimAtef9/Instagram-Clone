@@ -41,7 +41,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"
-            android:paddingRight="22dp"
+            android:paddingRight="25dp"
             android:background="@android:color/transparent"
             android:id="@+id/comment_edittext" />
 

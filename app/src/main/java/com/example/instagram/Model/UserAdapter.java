@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -95,6 +96,8 @@ public class UserAdapter extends ArrayAdapter<User> {
                     FirebaseDatabase.getInstance().getReference().child("Follow")
                             .child(user.getId()).child("Followers")
                             .child(firebaseUser.getUid()).setValue(true);
+
+                    addNotification(user.getId());
                 } else {
                     // already friends, then un-friend
                     FirebaseDatabase.getInstance().getReference().child("Follow")
@@ -134,5 +137,17 @@ public class UserAdapter extends ArrayAdapter<User> {
         });
     }
 
+    private void addNotification(String otherUser) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(otherUser);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", firebaseUser.getUid());
+        hashMap.put("note", "started following you");
+        hashMap.put("posterId", "");
+        hashMap.put("postId", "");
+        hashMap.put("isPost", false);
+
+        reference.push().setValue(hashMap);
+    }
 
 }

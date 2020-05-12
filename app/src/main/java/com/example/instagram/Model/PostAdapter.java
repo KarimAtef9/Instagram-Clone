@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private ArrayList<Post> postsList;
@@ -77,6 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 if (holder.like_imageview.getTag().equals("like")) {
                     FirebaseDatabase.getInstance().getReference()
                             .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).setValue(true);
+                    addNotification(post.getPublisher(), post.getPostId());
                 } else {
                     // remove like
                     FirebaseDatabase.getInstance().getReference()
@@ -192,6 +194,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
+
+    private void addNotification(String posterId, String postId) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(posterId);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", firebaseUser.getUid());
+        hashMap.put("note", "liked your post");
+        hashMap.put("posterId", posterId);
+        hashMap.put("postId", postId);
+        hashMap.put("isPost", true);
+
+        reference.push().setValue(hashMap);
+    }
 
     private void updatePublisherInfo(final String userId, final TextView username_textview,
                                      final TextView publisher_textview, final ImageView profile_imageview) {

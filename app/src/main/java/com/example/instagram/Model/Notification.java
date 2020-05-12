@@ -1,0 +1,60 @@
+package com.example.instagram.Model;
+
+public class Notification {
+    private String userId;
+    private String note;
+    private String posterId;
+    private String postId;
+    private boolean isPost;
+
+    public Notification(String userId, String note, String posterId, String postId, boolean isPost) {
+        this.userId = userId;
+        this.note = note;
+        this.posterId = posterId;
+        this.postId = postId;
+        this.isPost = isPost;
+    }
+
+    public Notification() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getPosterId() {
+        return posterId;
+    }
+
+    public void setPosterId(String posterId) {
+        this.posterId = posterId;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
+    public boolean getIsPost() {
+        return isPost;
+    }
+
+    public void setIsPost(boolean post) {
+        isPost = post;
+    }
+}
