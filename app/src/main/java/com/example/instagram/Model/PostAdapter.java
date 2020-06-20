@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.CommentActivity;
+import com.example.instagram.FollowersActivity;
 import com.example.instagram.Fragment.PostDetailsFragment;
 import com.example.instagram.Fragment.ProfileFragment;
 import com.example.instagram.R;
@@ -51,7 +52,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Post post = postsList.get(position);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -161,6 +162,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
                 ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new PostDetailsFragment()).commit();
+            }
+        });
+
+        // open list of like users
+        holder.likes_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, FollowersActivity.class);
+                intent.putExtra("id", post.getPostId());
+                intent.putExtra("title", "likes");
+                mContext.startActivity(intent);
             }
         });
 

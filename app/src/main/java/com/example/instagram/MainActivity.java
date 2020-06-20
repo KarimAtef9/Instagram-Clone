@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             e.apply();
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment()).commit();
+                    .replace(R.id.fragment_container, new ProfileFragment()).commit();
         } else {
             // open my profile
             getSupportFragmentManager().beginTransaction()

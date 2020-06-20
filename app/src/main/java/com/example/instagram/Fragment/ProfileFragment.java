@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.EditProfileActivity;
+import com.example.instagram.FollowersActivity;
 import com.example.instagram.Model.PhotoInProfileAdapter;
 import com.example.instagram.Model.Post;
 import com.example.instagram.Model.User;
@@ -174,6 +175,28 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 photosRecyclerView.setVisibility(View.GONE);
                 savesRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // open followers list
+        followers_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileId);
+                intent.putExtra("title", "followers");
+                startActivity(intent);
+            }
+        });
+
+        // open following list
+        following_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileId);
+                intent.putExtra("title", "following");
+                startActivity(intent);
             }
         });
 

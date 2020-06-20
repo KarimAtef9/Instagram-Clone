@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 
 
 public class SearchFragment extends Fragment {
-    private ListView usersListView;
+    private RecyclerView usersRecycleView;
     private UserAdapter userAdapter;
     private ArrayList<User> users;
     private EditText search_edittext;
@@ -49,18 +51,20 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        usersListView = view.findViewById(R.id.search_listView);
+        usersRecycleView = view.findViewById(R.id.search_recycleView);
+        usersRecycleView.setHasFixedSize(true);
+        usersRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         search_edittext = view.findViewById(R.id.search_editText);
 
         users = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), users);
-        usersListView.setAdapter(userAdapter);
+        userAdapter = new UserAdapter(getContext(), users, true);
+        usersRecycleView.setAdapter(userAdapter);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         readAllUsers();
 
-        // TODO : empty seach gives all users for debug purpose
+        // TODO : empty search gives all users for debug purpose
         // begin search on entering any input
         search_edittext.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,7 +80,7 @@ public class SearchFragment extends Fragment {
 //                } else {
 //                    searchForUsers(charSequence.toString().toLowerCase().trim());
 //                }
-                // TODO for debug purpose but after that remove all users seach option
+                // TODO for debug purpose but after that remove all users search option
                 searchForUsers(charSequence.toString().toLowerCase().trim());
             }
 
