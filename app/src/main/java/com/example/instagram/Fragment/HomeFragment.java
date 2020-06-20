@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.instagram.Model.Post;
 import com.example.instagram.Model.PostAdapter;
@@ -37,6 +38,8 @@ public class HomeFragment extends Fragment {
     private PostAdapter postAdapter;
     private ArrayList<Post> postsList;
 
+    private ProgressBar progressBar;    // gone after loading posts
+
     FirebaseUser firebaseUser;
 
     ArrayList<String> followingList;
@@ -58,6 +61,8 @@ public class HomeFragment extends Fragment {
         postsRecycleView.setAdapter(postAdapter);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        progressBar = view.findViewById(R.id.progressBar);
 
         fillFollowingList();
         readPosts();
@@ -117,6 +122,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
                 postAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override

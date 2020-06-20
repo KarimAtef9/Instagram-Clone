@@ -2,14 +2,13 @@ package com.example.instagram;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.instagram.Model.User;
 import com.example.instagram.Model.UserAdapter;
@@ -40,7 +39,7 @@ public class FollowersActivity extends AppCompatActivity {
         id = intent.getStringExtra("id");
         title = intent.getStringExtra("title");
 
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

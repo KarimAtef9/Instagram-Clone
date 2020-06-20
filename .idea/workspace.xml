@@ -11,23 +11,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61bdb726-381d-48af-883c-d52784e1ec2e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_followers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/OptionsActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/imageplaceholder.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_options.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/HomeFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/ProfileFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/SearchFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/SearchFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/CommentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/CommentAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/UserAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/UserAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,53 +54,13 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_followers.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="42" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="57" column="60" selection-start-line="57" selection-start-column="60" selection-end-line="57" selection-end-column="60" />
+            <state relative-caret-position="-274">
+              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
               <folding>
-                <element signature="method#onCancelled#0;class#2701:3104" />
                 <element signature="method#getFollowing#0;class#FollowersActivity#0" />
-                <element signature="method#onCancelled#0;class#3599:4033" />
                 <element signature="method#getLikes#0;class#FollowersActivity#0" />
-                <element signature="method#onCancelled#0;class#4390:4824" />
-                <element signature="method#onCancelled#0;class#4265:4699" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/ProfileFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1341">
-              <caret line="126" column="45" lean-forward="true" selection-start-line="126" selection-start-column="45" selection-end-line="126" selection-end-column="45" />
-              <folding>
-                <element signature="e#5334#5441#1" />
-                <element signature="e#6040#6555#1" />
-                <element signature="e#7315#7661#0" expanded="true" />
-                <element signature="e#7660#7661#0" expanded="true" />
-                <element signature="e#8094#8440#0" expanded="true" />
-                <element signature="e#8439#8440#0" expanded="true" />
-                <element signature="method#updateProfileInfo#0;class#ProfileFragment#0" />
-                <element signature="method#setFollowButtonText#0;class#ProfileFragment#0" />
-                <element signature="method#updateFollowersFollowingNo#0;class#ProfileFragment#0" />
-                <element signature="method#updatePostsNo#0;class#ProfileFragment#0" />
-                <element signature="method#readProfilePhotos#0;class#ProfileFragment#0" />
-                <element signature="method#readSavedPosts#0;class#ProfileFragment#0" />
-                <element signature="method#readSaved#0;class#ProfileFragment#0" />
-                <element signature="class#SavedPost#0;class#ProfileFragment#0" />
-                <element signature="method#addNotification#0;class#ProfileFragment#0" />
               </folding>
             </state>
           </provider>
@@ -109,10 +69,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/UserAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="90" column="48" selection-start-line="90" selection-start-column="48" selection-end-line="90" selection-end-column="48" />
+            <state relative-caret-position="407">
+              <caret line="89" column="66" selection-start-line="89" selection-start-column="66" selection-end-line="89" selection-end-column="66" />
               <folding>
                 <element signature="method#onCreateViewHolder#0;class#UserAdapter#0" />
+                <element signature="e#5027#5028#0" expanded="true" />
                 <element signature="e#5065#5066#0" expanded="true" />
                 <element signature="method#setFollowButtonText#0;class#UserAdapter#0" />
                 <element signature="method#addNotification#0;class#UserAdapter#0" />
@@ -123,16 +84,11 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/CommentAdapter.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="68" column="11" lean-forward="true" selection-start-line="68" selection-start-column="11" selection-end-line="68" selection-end-column="11" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#onCreateViewHolder#0;class#CommentAdapter#0" />
-                <element signature="class#ViewHolder#0;class#CommentAdapter#0" />
-                <element signature="method#updateCommenterInfo#0;class#CommentAdapter#0" />
-              </folding>
+            <state relative-caret-position="323">
+              <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -140,11 +96,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="176" column="11" lean-forward="true" selection-start-line="176" selection-start-column="11" selection-end-line="176" selection-end-column="11" />
+            <state relative-caret-position="378">
+              <caret line="110" column="47" lean-forward="true" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="47" />
               <folding>
-                <element signature="e#7316#7662#0" expanded="true" />
-                <element signature="e#7661#7662#0" expanded="true" />
+                <element signature="e#7370#7724#0" expanded="true" />
+                <element signature="e#7723#7724#0" expanded="true" />
                 <element signature="class#ViewHolder#0;class#PostAdapter#0" />
                 <element signature="method#ViewHolder#0;class#ViewHolder#0;class#PostAdapter#0" />
                 <element signature="method#addNotification#0;class#PostAdapter#0" />
@@ -187,8 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/button_background.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/button_black.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_start.xml" />
@@ -201,12 +155,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/User.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/user_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/post_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_save_black.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/Post.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/HomeFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/comment_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/Comment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
@@ -224,7 +175,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_post.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PhotoInProfileAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/NotificationFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/CommentAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/CommentActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/Notification.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/NotificationAdapter.java" />
@@ -232,12 +182,18 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_comment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_followers.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/ProfileFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/SearchFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/UserAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_options.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/OptionsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/HomeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/ProfileFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/CommentAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -273,21 +229,13 @@
             <path>
               <item name="Instagram" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="instagram" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="Fragment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Instagram" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="instagram" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
             </path>
             <path>
               <item name="Instagram" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
           </expand>
           <select />
@@ -317,13 +265,17 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyChat" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\zWorkspaceA\Instagram\app\src\main\res\drawable" />
+    </key>
     <key name="android.template.packageName">
       <recent name="com.example.instagram" />
     </key>
@@ -535,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589323308257</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="users list to recycleview&#10;fix open profiles from comments bug&#10;add followes, following, likes lists">
+      <created>1592613312720</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1592613312720</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -552,7 +511,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.19794345" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.19794345" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -561,7 +520,7 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.32974428" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" visible="true" weight="0.32974428" />
+      <window_info anchor="bottom" id="Logcat" order="1" weight="0.32974428" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32974428" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.32974428" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32974428" />
@@ -638,7 +597,8 @@
     <MESSAGE value="edit profile &amp; change profile picture" />
     <MESSAGE value="notifications added" />
     <MESSAGE value="comment editText edit" />
-    <option name="LAST_COMMIT_MESSAGE" value="comment editText edit" />
+    <MESSAGE value="users list to recycleview&#10;fix open profiles from comments bug&#10;add followes, following, likes lists" />
+    <option name="LAST_COMMIT_MESSAGE" value="users list to recycleview&#10;fix open profiles from comments bug&#10;add followes, following, likes lists" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -648,19 +608,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_like.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="14" selection-start-line="9" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_search_light.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/instagram_png.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_search_light.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -959,36 +906,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
-          <folding>
-            <element signature="e#784#1804#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_followers.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="42" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="54" selection-end-column="45" />
-          <folding>
-            <element signature="e#773#1868#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -1007,90 +924,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="176" column="11" lean-forward="true" selection-start-line="176" selection-start-column="11" selection-end-line="176" selection-end-column="11" />
-          <folding>
-            <element signature="e#7316#7662#0" expanded="true" />
-            <element signature="e#7661#7662#0" expanded="true" />
-            <element signature="class#ViewHolder#0;class#PostAdapter#0" />
-            <element signature="method#ViewHolder#0;class#ViewHolder#0;class#PostAdapter#0" />
-            <element signature="method#addNotification#0;class#PostAdapter#0" />
-            <element signature="method#updatePublisherInfo#0;class#PostAdapter#0" />
-            <element signature="method#update_LikeButton_NoLikes#0;class#PostAdapter#0" />
-            <element signature="method#updateNumberOfComments#0;class#PostAdapter#0" />
-            <element signature="method#updateSaveButton#0;class#PostAdapter#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/SearchFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
           <folding>
             <element signature="method#searchForUsers#0;class#SearchFragment#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="57" column="60" selection-start-line="57" selection-start-column="60" selection-end-line="57" selection-end-column="60" />
-          <folding>
-            <element signature="method#onCancelled#0;class#2701:3104" />
-            <element signature="method#getFollowing#0;class#FollowersActivity#0" />
-            <element signature="method#onCancelled#0;class#3599:4033" />
-            <element signature="method#getLikes#0;class#FollowersActivity#0" />
-            <element signature="method#onCancelled#0;class#4390:4824" />
-            <element signature="method#onCancelled#0;class#4265:4699" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/ProfileFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1341">
-          <caret line="126" column="45" lean-forward="true" selection-start-line="126" selection-start-column="45" selection-end-line="126" selection-end-column="45" />
-          <folding>
-            <element signature="e#5334#5441#1" />
-            <element signature="e#6040#6555#1" />
-            <element signature="e#7315#7661#0" expanded="true" />
-            <element signature="e#7660#7661#0" expanded="true" />
-            <element signature="e#8094#8440#0" expanded="true" />
-            <element signature="e#8439#8440#0" expanded="true" />
-            <element signature="method#updateProfileInfo#0;class#ProfileFragment#0" />
-            <element signature="method#setFollowButtonText#0;class#ProfileFragment#0" />
-            <element signature="method#updateFollowersFollowingNo#0;class#ProfileFragment#0" />
-            <element signature="method#updatePostsNo#0;class#ProfileFragment#0" />
-            <element signature="method#readProfilePhotos#0;class#ProfileFragment#0" />
-            <element signature="method#readSavedPosts#0;class#ProfileFragment#0" />
-            <element signature="method#readSaved#0;class#ProfileFragment#0" />
-            <element signature="class#SavedPost#0;class#ProfileFragment#0" />
-            <element signature="method#addNotification#0;class#ProfileFragment#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/HomeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-          <folding>
-            <element signature="method#fillFollowingList#0;class#HomeFragment#0" />
-            <element signature="method#readPosts#0;class#HomeFragment#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="42" column="75" selection-start-line="42" selection-start-column="75" selection-end-line="42" selection-end-column="75" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1107,12 +946,150 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_followers.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="11" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_options.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="36" column="30" lean-forward="true" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+          <folding>
+            <element signature="e#277#1970#0" />
+            <element signature="e#773#1868#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+          <folding>
+            <element signature="e#784#1804#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/HomeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="40" column="67" selection-start-line="40" selection-start-column="67" selection-end-line="40" selection-end-column="67" />
+          <folding>
+            <element signature="method#fillFollowingList#0;class#HomeFragment#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/ProfileFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="199" column="16" lean-forward="true" selection-start-line="199" selection-start-column="16" selection-end-line="199" selection-end-column="38" />
+          <folding>
+            <element signature="e#5382#5489#1" />
+            <element signature="e#6088#6603#1" />
+            <element signature="e#8124#8300#0" expanded="true" />
+            <element signature="e#8299#8300#0" expanded="true" />
+            <element signature="method#updateProfileInfo#0;class#ProfileFragment#0" />
+            <element signature="method#setFollowButtonText#0;class#ProfileFragment#0" />
+            <element signature="method#updateFollowersFollowingNo#0;class#ProfileFragment#0" />
+            <element signature="method#updatePostsNo#0;class#ProfileFragment#0" />
+            <element signature="method#readProfilePhotos#0;class#ProfileFragment#0" />
+            <element signature="method#readSavedPosts#0;class#ProfileFragment#0" />
+            <element signature="method#readSaved#0;class#ProfileFragment#0" />
+            <element signature="class#SavedPost#0;class#ProfileFragment#0" />
+            <element signature="method#addNotification#0;class#ProfileFragment#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="110" column="47" lean-forward="true" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="47" />
+          <folding>
+            <element signature="e#7370#7724#0" expanded="true" />
+            <element signature="e#7723#7724#0" expanded="true" />
+            <element signature="class#ViewHolder#0;class#PostAdapter#0" />
+            <element signature="method#ViewHolder#0;class#ViewHolder#0;class#PostAdapter#0" />
+            <element signature="method#addNotification#0;class#PostAdapter#0" />
+            <element signature="method#updatePublisherInfo#0;class#PostAdapter#0" />
+            <element signature="method#update_LikeButton_NoLikes#0;class#PostAdapter#0" />
+            <element signature="method#updateNumberOfComments#0;class#PostAdapter#0" />
+            <element signature="method#updateSaveButton#0;class#PostAdapter#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/CommentAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="68" column="47" selection-start-line="68" selection-start-column="47" selection-end-line="68" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onCreateViewHolder#0;class#CommentAdapter#0" />
+            <element signature="e#1993#2258#0" expanded="true" />
+            <element signature="e#2257#2258#0" expanded="true" />
+            <element signature="class#ViewHolder#0;class#CommentAdapter#0" />
+            <element signature="method#updateCommenterInfo#0;class#CommentAdapter#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/OptionsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1069#1242#0" expanded="true" />
+            <element signature="e#1241#1242#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/FollowersActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-274">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding>
+            <element signature="method#getFollowing#0;class#FollowersActivity#0" />
+            <element signature="method#getLikes#0;class#FollowersActivity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/UserAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="90" column="48" selection-start-line="90" selection-start-column="48" selection-end-line="90" selection-end-column="48" />
+        <state relative-caret-position="407">
+          <caret line="89" column="66" selection-start-line="89" selection-start-column="66" selection-end-line="89" selection-end-column="66" />
           <folding>
             <element signature="method#onCreateViewHolder#0;class#UserAdapter#0" />
+            <element signature="e#5027#5028#0" expanded="true" />
             <element signature="e#5065#5066#0" expanded="true" />
             <element signature="method#setFollowButtonText#0;class#UserAdapter#0" />
             <element signature="method#addNotification#0;class#UserAdapter#0" />
@@ -1121,16 +1098,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/CommentAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="68" column="11" lean-forward="true" selection-start-line="68" selection-start-column="11" selection-end-line="68" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#onCreateViewHolder#0;class#CommentAdapter#0" />
-            <element signature="class#ViewHolder#0;class#CommentAdapter#0" />
-            <element signature="method#updateCommenterInfo#0;class#CommentAdapter#0" />
-          </folding>
+        <state relative-caret-position="323">
+          <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
         </state>
       </provider>
     </entry>
