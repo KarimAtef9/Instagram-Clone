@@ -14,9 +14,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.instagram.Model.Post;
 import com.example.instagram.Model.PostAdapter;
+import com.example.instagram.Model.Story;
+import com.example.instagram.Model.StoryAdapter;
 import com.example.instagram.Model.User;
 import com.example.instagram.Model.UserAdapter;
 import com.example.instagram.R;
@@ -38,11 +41,15 @@ public class HomeFragment extends Fragment {
     private PostAdapter postAdapter;
     private ArrayList<Post> postsList;
 
+    private RecyclerView storiesRecycleView;
+    private StoryAdapter storyAdapter;
+    private ArrayList<Story> storiesList;
+
     private ProgressBar progressBar;    // gone after loading posts
 
-    FirebaseUser firebaseUser;
+    private FirebaseUser firebaseUser;
 
-    ArrayList<String> followingList;
+    private ArrayList<String> followingList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,13 +67,23 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postsList);
         postsRecycleView.setAdapter(postAdapter);
 
+        storiesRecycleView = view.findViewById(R.id.stories_recycleView);
+        storiesRecycleView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        storiesRecycleView.setLayoutManager(linearLayoutManager1);
+
+        storiesList = new ArrayList<>();
+        storyAdapter = new StoryAdapter(getContext(), storiesList);
+        storiesRecycleView.setAdapter(storyAdapter);
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         progressBar = view.findViewById(R.id.progressBar);
 
         fillFollowingList();
         readPosts();
-
+        readStories();
 
         // Inflate the layout for this fragment
         return view;
@@ -132,6 +149,36 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void readStories() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long currentTime = System.currentTimeMillis();
+                storiesList.clear();
+                storiesList.add(new Story("", firebaseUser.getUid(), "", 0, 0));
+                // stories of my followings
+                for (String userId: followingList) {
+                    int count = 0;
+                    Story story = null;
+                    for (DataSnapshot snapshot: dataSnapshot.child(userId).getChildren()) {
+                        story = snapshot.getValue(Story.class);
+                        if (currentTime > story.getStartTime() && currentTime < story.getEndTime()) {
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        storiesList.add(story);
+                    }
+                }
+                storyAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }
