@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.AddStoryActivity;
 import com.example.instagram.R;
+import com.example.instagram.StoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +53,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        Story story = stories.get(position);
+        final Story story = stories.get(position);
         // load story image and publisher name
         updatePublisherInfo(holder, story.getUserId(), position);
 
@@ -72,7 +73,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                 if (holder.getAdapterPosition() == 0) { // open my story or add new one
                     openMyStory(holder.addStory_tv, holder.addStoryIcon_iv);
                 } else {
-                    // TODO: go to other users story
+                    Intent intent = new Intent(mContext, StoryActivity.class);
+                    intent.putExtra("userId", story.getUserId());
+                    mContext.startActivity(intent);
                 }
             }
         });
@@ -191,7 +194,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                // TODO: open my story
+                                Intent intent = new Intent(mContext, StoryActivity.class);
+                                intent.putExtra("userId", firebaseUser.getUid());
+                                mContext.startActivity(intent);
+                                dialogInterface.dismiss();
                             }
                         });
                     // go to add story
@@ -201,7 +207,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     Intent intent = new Intent(mContext, AddStoryActivity.class);
                                     mContext.startActivity(intent);
-                                    alertDialog.dismiss();
+                                    dialogInterface.dismiss();
                                 }
                             });
                     alertDialog.show();
