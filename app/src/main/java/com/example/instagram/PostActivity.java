@@ -158,10 +158,8 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        String extension = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-
+        String uriString = uri.toString();
+        String extension = uriString.substring(uriString.lastIndexOf(".") +1);
         return extension;
     }
 

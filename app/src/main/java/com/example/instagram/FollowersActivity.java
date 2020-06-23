@@ -69,6 +69,9 @@ public class FollowersActivity extends AppCompatActivity {
             case "likes":
                 getLikes();
                 break;
+            case "views":
+                getViews();
+                break;
             default: break;
         }
         showUsers();
@@ -128,6 +131,26 @@ public class FollowersActivity extends AppCompatActivity {
             onDataChange executes once and stop listening
             saves cost
          */
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                idsList.clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    idsList.add(snapshot.getKey());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getViews() {
+        String storyId = getIntent().getStringExtra("storyId");
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Story").child(id).child(storyId).child("Views");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
