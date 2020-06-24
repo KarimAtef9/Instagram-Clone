@@ -133,41 +133,7 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
         deleteStory_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // to make sure before deletion
-                final AlertDialog alertDialog = new AlertDialog.Builder(StoryActivity.this).create();
-                alertDialog.setTitle("Delete Story?");
-                // do nothing
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                storiesProgressView.resume();
-                            }
-                        });
-                // delete image
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                DatabaseReference reference = FirebaseDatabase.getInstance()
-                                        .getReference("Story").child(userId).child(storiesIds.get(counter));
-                                reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(StoryActivity.this, "Story Deleted", Toast.LENGTH_SHORT).show();
-                                            finish();
-                                        }
-                                    }
-                                });
-
-                                // delete image from firebase storage
-                                FirebaseStorage.getInstance().getReferenceFromUrl(imagesUrls.get(counter)).delete();
-                            }
-                        });
-                alertDialog.show();
-                storiesProgressView.pause();
+                deleteStory();
             }
         });
 
@@ -297,6 +263,44 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
 
             }
         });
+    }
+
+    private void deleteStory() {
+        // to make sure before deletion
+        final AlertDialog alertDialog = new AlertDialog.Builder(StoryActivity.this).create();
+        alertDialog.setTitle("Delete Story?");
+        // do nothing
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        storiesProgressView.resume();
+                    }
+                });
+        // delete image
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DatabaseReference reference = FirebaseDatabase.getInstance()
+                                .getReference("Story").child(userId).child(storiesIds.get(counter));
+                        reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(StoryActivity.this, "Story Deleted", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            }
+                        });
+
+                        // delete image from firebase storage
+                        FirebaseStorage.getInstance().getReferenceFromUrl(imagesUrls.get(counter)).delete();
+                    }
+                });
+        alertDialog.show();
+        storiesProgressView.pause();
     }
 
 }

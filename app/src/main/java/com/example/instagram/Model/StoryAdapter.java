@@ -39,6 +39,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
         this.stories = stories;
     }
 
+    // to set layout for addStoryItem if position = 0
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,7 +72,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 if (holder.getAdapterPosition() == 0) { // open my story or add new one
-                    openMyStory(holder.addStory_tv, holder.addStoryIcon_iv);
+                    openMyStory();
                 } else {
                     Intent intent = new Intent(mContext, StoryActivity.class);
                     intent.putExtra("userId", story.getUserId());
@@ -172,7 +173,11 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
         });
     }
 
-    private void openMyStory(final TextView addStory_tv, final ImageView addStoryIcon) {
+    /*
+        check if i have active stories => then open my story or add new one
+        if have no active stories => go to addStory activity
+     */
+    private void openMyStory() {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("Story").child(firebaseUser.getUid());
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
