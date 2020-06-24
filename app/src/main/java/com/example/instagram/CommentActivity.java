@@ -61,13 +61,18 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
 
+        // receive postId & publisherId
+        Intent intent = getIntent();
+        postId = intent.getStringExtra("postId");
+        publisherId = intent.getStringExtra("publisherId");
+
         commentsRecycleView = findViewById(R.id.comments_recycleview);
         commentsRecycleView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         commentsRecycleView.setLayoutManager(linearLayoutManager);
 
         commentsList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(this, commentsList);
+        commentAdapter = new CommentAdapter(this, commentsList, postId);
         commentsRecycleView.setAdapter(commentAdapter);
 
         profile_imageview = findViewById(R.id.profile_imageview);
@@ -75,11 +80,6 @@ public class CommentActivity extends AppCompatActivity {
         comment_edittext = findViewById(R.id.comment_edittext);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        // receive postId & publisherId
-        Intent intent = getIntent();
-        postId = intent.getStringExtra("postId");
-        publisherId = intent.getStringExtra("publisherId");
 
         // change Post button (textView) color on typing
         comment_edittext.addTextChangedListener(new TextWatcher() {
@@ -122,11 +122,14 @@ public class CommentActivity extends AppCompatActivity {
     private void addComment() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postId);
 
+        String commentId = reference.push().getKey();
+
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("comment", comment_edittext.getText().toString());
         hashMap.put("publisher", firebaseUser.getUid());
+        hashMap.put("commentId", commentId);
 
-        reference.push().setValue(hashMap);
+        reference.child(commentId).setValue(hashMap);
         addNotification();
         comment_edittext.setText("");
     }

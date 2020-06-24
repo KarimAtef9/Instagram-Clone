@@ -1,5 +1,6 @@
 package com.example.instagram.Model;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +30,7 @@ import com.example.instagram.CommentActivity;
 import com.example.instagram.FollowersActivity;
 import com.example.instagram.Fragment.PostDetailsFragment;
 import com.example.instagram.Fragment.ProfileFragment;
+import com.example.instagram.MainActivity;
 import com.example.instagram.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -373,6 +375,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
+    // edit post description
     private void editPost(final String postId, final String publisherId) {
         AlertDialog.Builder alertDialogue = new AlertDialog.Builder(mContext);
         alertDialogue.setTitle("Edit Post");
@@ -436,6 +439,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(mContext, "Post Deleted", Toast.LENGTH_SHORT).show();
+                            mContext.startActivity(new Intent(mContext, MainActivity.class));
+                            ((Activity)mContext).finish();
                         }
                     }
                 });
@@ -454,7 +459,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         String reportId = reference.push().getKey();
 
-        reference.child(postId).setValue(map);
+        reference.child(reportId).setValue(map);
 
         Toast.makeText(mContext, "Post Reported!", Toast.LENGTH_SHORT).show();
     }

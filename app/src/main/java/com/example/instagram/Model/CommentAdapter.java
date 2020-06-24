@@ -1,12 +1,15 @@
 package com.example.instagram.Model;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.MainActivity;
 import com.example.instagram.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,11 +34,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private Context mContext;
     private ArrayList<Comment> commentsList;
 
+    private String postId;
+
     private FirebaseUser firebaseUser;
 
-    public CommentAdapter(Context mContext, ArrayList<Comment> commentsList) {
+    public CommentAdapter(Context mContext, ArrayList<Comment> commentsList, String postId) {
         this.mContext = mContext;
         this.commentsList = commentsList;
+        this.postId = postId;
     }
 
     @NonNull
@@ -48,12 +56,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final Comment comment = commentsList.get(position);
 
-        holder.comment_textview.setText(comment.getComment());
-        updateCommenterInfo(comment.getPublisher(), holder.username_textview, holder.profileImage_imageview);
+        holder.comment_tv.setText(comment.getComment());
+        updateCommenterInfo(comment.getPublisher(), holder.username_tv, holder.profileImage_iv);
 
 
         // open commenter profile on clicking his name or profile image
-        holder.username_textview.setOnClickListener(new View.OnClickListener() {
+        holder.username_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MainActivity.class);
@@ -61,12 +69,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 mContext.startActivity(intent);
             }
         });
-        holder.profileImage_imageview.setOnClickListener(new View.OnClickListener() {
+        holder.profileImage_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MainActivity.class);
                 intent.putExtra("publisherId", comment.getPublisher());
                 mContext.startActivity(intent);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                deleteComment(comment);
+                return true;
             }
         });
 
@@ -79,15 +95,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView username_textview, comment_textview;
-        public ImageView profileImage_imageview;
+        public TextView username_tv, comment_tv;
+        public ImageView profileImage_iv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            username_textview = itemView.findViewById(R.id.username_textview);
-            comment_textview = itemView.findViewById(R.id.comment_textview);
-            profileImage_imageview = itemView.findViewById(R.id.profile_imageview);
+            username_tv = itemView.findViewById(R.id.username_textview);
+            comment_tv = itemView.findViewById(R.id.comment_textview);
+            profileImage_iv = itemView.findViewById(R.id.profile_imageview);
 
         }
     }
@@ -111,4 +127,36 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         });
     }
 
+    // delete my comment
+    private void deleteComment(final Comment comment) {
+        if (comment.getPublisher().equals(firebaseUser.getUid())) { // my comment
+            AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+            alertDialog.setTitle("Delete Comment?");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            FirebaseDatabase.getInstance().getReference("Comments")
+                                    .child(postId).child(comment.getCommentId())
+                                    .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {{
+                                        Toast.makeText(mContext, "Comment Deleted", Toast.LENGTH_SHORT).show();
+                                    }}
+                                }
+                            });
+                            dialogInterface.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
 }

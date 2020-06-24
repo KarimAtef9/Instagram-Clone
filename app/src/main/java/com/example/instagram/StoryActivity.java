@@ -265,6 +265,7 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
         });
     }
 
+    // delete story from database and image from storage
     private void deleteStory() {
         // to make sure before deletion
         final AlertDialog alertDialog = new AlertDialog.Builder(StoryActivity.this).create();
