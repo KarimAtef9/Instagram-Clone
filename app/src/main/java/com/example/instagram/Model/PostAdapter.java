@@ -219,6 +219,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 if (!post.getPublisher().equals(firebaseUser.getUid())) {
                     popupMenu.getMenu().findItem(R.id.edit_menu).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.delete_menu).setVisible(false);
+                } else {
+                    popupMenu.getMenu().findItem(R.id.report_menu).setVisible(false);
                 }
                 popupMenu.show();
             }

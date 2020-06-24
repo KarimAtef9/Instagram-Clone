@@ -10,21 +10,13 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61bdb726-381d-48af-883c-d52784e1ec2e" name="Default Changelist" comment="add edit post (edit, delete or report)">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_more.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_more.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_more.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_more.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_more.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/post_menu.xml" afterDir="false" />
+    <list default="true" id="61bdb726-381d-48af-883c-d52784e1ec2e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/StoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/StoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/StoryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/instagram/StoryActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/post_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/post_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -112,14 +104,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-336">
-              <caret line="203" column="40" selection-start-line="203" selection-start-column="32" selection-end-line="203" selection-end-column="40" />
+            <state relative-caret-position="255">
+              <caret line="222" column="65" selection-start-line="222" selection-start-column="65" selection-end-line="222" selection-end-column="65" />
               <folding>
-                <element signature="e#8288#9598#0" expanded="true" />
+                <element signature="e#8322#9872#0" expanded="true" />
                 <element signature="e#8387#8608#0" expanded="true" />
                 <element signature="e#8607#8608#0" expanded="true" />
-                <element signature="e#9597#9598#0" expanded="true" />
-                <element signature="e#9965#9966#0" expanded="true" />
+                <element signature="e#9871#9872#0" expanded="true" />
+                <element signature="e#10076#10077#0" expanded="true" />
                 <element signature="class#ViewHolder#0;class#PostAdapter#0" />
                 <element signature="method#addNotification#0;class#PostAdapter#0" />
                 <element signature="method#updatePublisherInfo#0;class#PostAdapter#0" />
@@ -140,19 +132,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/Comment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/PostActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="118" column="66" lean-forward="true" selection-start-line="118" selection-start-column="24" selection-end-line="118" selection-end-column="66" />
+            <state relative-caret-position="191">
+              <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
               <folding>
                 <element signature="method#getFileExtension#0;class#PostActivity#0" />
               </folding>
@@ -191,7 +174,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/User.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/user_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_save_black.xml" />
@@ -241,6 +223,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/post_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/StoryActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/post_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java" />
       </list>
     </option>
@@ -570,7 +553,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592874122589</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="add edit post (edit, delete or report)&#10;+ some code refinement">
+      <created>1592963940881</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1592963940881</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -584,9 +574,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.19794345" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.19794345" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -595,7 +586,7 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.32974428" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49871466" weight="0.32974428" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="1" sideWeight="0.49871466" visible="true" weight="0.32974428" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32974428" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.32974428" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32974428" />
@@ -677,7 +668,8 @@
     <MESSAGE value="story layout &#10;add story&#10;fix extension in story (testing)" />
     <MESSAGE value="view stories" />
     <MESSAGE value="fix post image extension&#10;story views &amp; delete&#10;show viewer (story progress don't pause)" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix post image extension&#10;story views &amp; delete&#10;show viewer (story progress don't pause)" />
+    <MESSAGE value="add edit post (edit, delete or report)&#10;+ some code refinement" />
+    <option name="LAST_COMMIT_MESSAGE" value="add edit post (edit, delete or report)&#10;+ some code refinement" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -687,9 +679,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_save_black.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_saved.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -884,16 +873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="293">
           <caret line="70" column="32" selection-start-line="70" selection-start-column="20" selection-end-line="70" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/SearchFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
-          <folding>
-            <element signature="method#searchForUsers#0;class#SearchFragment#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1150,16 +1129,6 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/PostActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="118" column="66" lean-forward="true" selection-start-line="118" selection-start-column="24" selection-end-line="118" selection-end-column="66" />
-          <folding>
-            <element signature="method#getFileExtension#0;class#PostActivity#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/post_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1198,16 +1167,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Fragment/SearchFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="66" column="11" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="11" />
+          <folding>
+            <element signature="method#searchForUsers#0;class#SearchFragment#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/PostActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
+          <folding>
+            <element signature="method#getFileExtension#0;class#PostActivity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/instagram/Model/PostAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-336">
-          <caret line="203" column="40" selection-start-line="203" selection-start-column="32" selection-end-line="203" selection-end-column="40" />
+        <state relative-caret-position="255">
+          <caret line="222" column="65" selection-start-line="222" selection-start-column="65" selection-end-line="222" selection-end-column="65" />
           <folding>
-            <element signature="e#8288#9598#0" expanded="true" />
+            <element signature="e#8322#9872#0" expanded="true" />
             <element signature="e#8387#8608#0" expanded="true" />
             <element signature="e#8607#8608#0" expanded="true" />
-            <element signature="e#9597#9598#0" expanded="true" />
-            <element signature="e#9965#9966#0" expanded="true" />
+            <element signature="e#9871#9872#0" expanded="true" />
+            <element signature="e#10076#10077#0" expanded="true" />
             <element signature="class#ViewHolder#0;class#PostAdapter#0" />
             <element signature="method#addNotification#0;class#PostAdapter#0" />
             <element signature="method#updatePublisherInfo#0;class#PostAdapter#0" />
