@@ -27,6 +27,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
             android:id="@+id/addStoryIcon_civ"/>
 
     </RelativeLayout>

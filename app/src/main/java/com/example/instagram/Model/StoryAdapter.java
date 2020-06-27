@@ -60,7 +60,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
         // open stories
         if (holder.getAdapterPosition() != 0) {
-            openStory(holder, story.getUserId());
+            readOthersStory(holder, story.getUserId());
         }
 
         // open my story
@@ -230,8 +230,12 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
         });
     }
 
-    // open other users stories
-    private void openStory(final ViewHolder holder, String userId) {
+    /*
+        count active stories that i didn't open
+        if any not open yet color red
+        else mark as seen
+     */
+    private void readOthersStory(final ViewHolder holder, String userId) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("Story").child(userId);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {

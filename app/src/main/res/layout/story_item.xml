@@ -15,6 +15,7 @@
         android:layout_gravity="center"
         app:civ_border_color="#f23b5a"
         android:layout_marginTop="5dp"
+        android:visibility="gone"
         android:id="@+id/storyImage_civ"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -31,7 +32,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="username"
         android:id="@+id/storyUsername_tv"
         android:textColor="@color/colorPrimaryDark"
         android:layout_gravity="center"

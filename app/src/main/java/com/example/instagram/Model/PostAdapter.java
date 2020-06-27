@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.contentcapture.DataRemovalRequest;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -92,16 +90,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.like_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // like post
-                if (holder.like_iv.getTag().equals("like")) {
-                    FirebaseDatabase.getInstance().getReference()
-                            .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).setValue(true);
-                    addNotification(post.getPublisher(), post.getPostId());
-                } else {
-                    // remove like
-                    FirebaseDatabase.getInstance().getReference()
-                            .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).removeValue();
-                }
+                likePost(holder, post);
             }
         });
 
@@ -131,16 +120,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.save_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.save_iv.getTag().equals("save")) {
-                    // save post in database as Saves - my id - publisher id - post id
-                    FirebaseDatabase.getInstance().getReference("Saves")
-                            .child(firebaseUser.getUid()).child(post.getPostId())
-                            .child(post.getPublisher()).setValue(System.currentTimeMillis());
-                } else {
-                    FirebaseDatabase.getInstance().getReference("Saves")
-                            .child(firebaseUser.getUid()).child(post.getPostId())
-                            .child(post.getPublisher()).removeValue();
-                }
+                savePost(holder, post);
             }
         });
 
@@ -259,6 +239,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
+    // on click like button
+    private void likePost(ViewHolder holder, Post post) {
+        // like post
+        if (holder.like_iv.getTag().equals("like")) {
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).setValue(true);
+            addNotification(post.getPublisher(), post.getPostId());
+        } else {
+            // remove like
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).removeValue();
+        }
+    }
+
+    private void savePost(ViewHolder holder, Post post) {
+        if (holder.save_iv.getTag().equals("save")) {
+            // save post in database as Saves - my id - publisher id - post id
+            FirebaseDatabase.getInstance().getReference("Saves")
+                    .child(firebaseUser.getUid()).child(post.getPostId())
+                    .child(post.getPublisher()).setValue(System.currentTimeMillis());
+        } else {
+            FirebaseDatabase.getInstance().getReference("Saves")
+                    .child(firebaseUser.getUid()).child(post.getPostId())
+                    .child(post.getPublisher()).removeValue();
+        }
+    }
 
     private void addNotification(String posterId, String postId) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(posterId);
