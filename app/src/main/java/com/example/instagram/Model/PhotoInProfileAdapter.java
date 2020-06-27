@@ -2,12 +2,14 @@ package com.example.instagram.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,13 +46,7 @@ public class PhotoInProfileAdapter extends RecyclerView.Adapter<PhotoInProfileAd
         holder.photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("postId", post.getPostId());
-                editor.putString("publisherId", post.getPublisher());
-                editor.apply();
-
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new PostDetailsFragment()).commit();
+                openPost(post);
             }
         });
     }
@@ -65,6 +61,23 @@ public class PhotoInProfileAdapter extends RecyclerView.Adapter<PhotoInProfileAd
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             photo = itemView.findViewById(R.id.photoInProfile_imageview);
+        }
+    }
+
+    // open post if homepage (not already opened)
+    private void openPost(Post post) {
+        Fragment postDetails = ((FragmentActivity)mContext).getSupportFragmentManager().findFragmentByTag("PostDetailsFragment");
+        Log.v("PostAdapter", "PostDetailsFragment status : "+postDetails);
+
+        if (postDetails == null) {  // no need to check visible or not
+            // not in postDetails fragment
+            SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+            editor.putString("postId", post.getPostId());
+            editor.putString("publisherId", post.getPublisher());
+            editor.apply();
+
+            ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new PostDetailsFragment(), "PostDetailsFragment").commit();
         }
     }
 }
