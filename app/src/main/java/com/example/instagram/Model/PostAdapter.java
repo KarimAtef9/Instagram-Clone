@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,6 +96,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
+        holder.postImage_iv.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onDoubleClick() {
+                likePost(holder, post);
+            }
+
+            @Override
+            public void onSingleClick() {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("postId", post.getPostId());
+                editor.putString("publisherId", post.getPublisher());
+                editor.apply();
+
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PostDetailsFragment()).commit();
+            }
+        });
+
         // go to comments through comment button or view comments text
         holder.comment_iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,19 +168,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-        // open post when click on image
-        holder.postImage_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("postId", post.getPostId());
-                editor.putString("publisherId", post.getPublisher());
-                editor.apply();
-
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new PostDetailsFragment()).commit();
-            }
-        });
+//        // open post when click on image
+//        holder.postImage_iv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+//                editor.putString("postId", post.getPostId());
+//                editor.putString("publisherId", post.getPublisher());
+//                editor.apply();
+//
+//                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.fragment_container, new PostDetailsFragment()).commit();
+//            }
+//        });
 
         // open list of like users
         holder.likes_tv.setOnClickListener(new View.OnClickListener() {
@@ -468,5 +488,40 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.child(reportId).setValue(map);
 
         Toast.makeText(mContext, "Post Reported!", Toast.LENGTH_SHORT).show();
+    }
+
+    public abstract class DoubleClickListener implements View.OnClickListener {
+
+        private static final long DOUBLE_CLICK_TIME_DELTA = 180;//milliseconds
+
+        long lastClickTime = 0;
+        private boolean doubleClicked = false;
+
+        @Override
+        public void onClick(final View v) {
+            long clickTime = System.currentTimeMillis();
+            if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA){
+                doubleClicked = true;
+                onDoubleClick();
+            } else {
+                doubleClicked = false;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (!doubleClicked) {
+                            onSingleClick();
+                        }
+
+                    }
+                }, 180);
+
+            }
+            lastClickTime = clickTime;
+        }
+
+        public abstract void onSingleClick();
+        public abstract void onDoubleClick();
     }
 }
