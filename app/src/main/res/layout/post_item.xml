@@ -70,7 +70,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_save_black"
+                android:src="@drawable/ic_saved"
                 android:id="@+id/save_imageview"/>
 
 

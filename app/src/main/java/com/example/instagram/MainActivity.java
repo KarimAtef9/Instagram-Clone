@@ -3,6 +3,7 @@ package com.example.instagram;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     Fragment selectedFragment = null;
+    String tag = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
             e.apply();
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new ProfileFragment()).commit();
+                    .replace(R.id.fragment_container, new ProfileFragment(), "profileFragment").commit();
         } else {
             // open my profile
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment()).commit();
+                    .replace(R.id.fragment_container, new HomeFragment(), "homeFragment").commit();
         }
 
 
@@ -58,33 +60,52 @@ public class MainActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.home_nav:
                             selectedFragment = new HomeFragment();
+                            tag = "homeFragment";
                             break;
                         case R.id.search_nav:
                             selectedFragment = new SearchFragment();
+                            tag = "searchFragment";
                             break;
                         case R.id.add_nav:
                             selectedFragment = null;
+                            tag = "";
                             startActivity(new Intent(MainActivity.this, PostActivity.class));
                             finish();
                             break;
                         case R.id.favorite_nav:
                             selectedFragment = new NotificationFragment();
+                            tag = "notificationFragment";
                             break;
                         case R.id.profile_nav:
                             SharedPreferences.Editor e = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
                             e.putString("profileId", FirebaseAuth.getInstance().getCurrentUser().getUid());
                             e.apply();
                             selectedFragment = new ProfileFragment();
+                            tag = "profileFragment";
                             break;
                     }
 
                     if (selectedFragment != null) {
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, selectedFragment).commit();
+                                .replace(R.id.fragment_container, selectedFragment, tag).commit();
                     }
 
                     return true;
                 }
             };
 
+    @Override
+    public void onBackPressed() {
+        Fragment homeFragment = getSupportFragmentManager().findFragmentByTag("homeFragment");
+        Fragment postDetailsFragment = getSupportFragmentManager().findFragmentByTag("PostDetailsFragment");
+
+        if (homeFragment != null && homeFragment.isVisible()) {
+            Log.v("Main Activity", "homeFragment status : "+homeFragment);
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment(), "homeFragment").commit();
+            bottomNavigationView.setSelectedItemId(R.id.home_nav);
+        }
+    }
 }
