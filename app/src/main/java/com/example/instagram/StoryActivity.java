@@ -137,6 +137,25 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
             }
         });
 
+        publisherImage_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoryActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // to make only one Main activity
+                intent.putExtra("publisherId", userId);
+                startActivity(intent);
+            }
+        });
+        publisherUsername_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoryActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // to make only one Main activity
+                intent.putExtra("publisherId", userId);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

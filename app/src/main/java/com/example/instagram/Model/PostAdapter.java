@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,7 +32,6 @@ import com.example.instagram.FollowersActivity;
 import com.example.instagram.Fragment.PostDetailsFragment;
 import com.example.instagram.Fragment.ProfileFragment;
 import com.example.instagram.MainActivity;
-import com.example.instagram.PostActivity;
 import com.example.instagram.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -162,6 +160,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
+        // used before double click like
 //        // open post when click on image
 //        holder.postImage_iv.setOnClickListener(new View.OnClickListener() {
 //            @Override

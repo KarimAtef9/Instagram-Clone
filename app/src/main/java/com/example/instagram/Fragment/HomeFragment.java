@@ -11,17 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.instagram.Model.Post;
 import com.example.instagram.Model.PostAdapter;
 import com.example.instagram.Model.Story;
 import com.example.instagram.Model.StoryAdapter;
-import com.example.instagram.Model.User;
-import com.example.instagram.Model.UserAdapter;
 import com.example.instagram.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

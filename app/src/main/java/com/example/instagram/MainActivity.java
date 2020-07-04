@@ -1,12 +1,10 @@
 package com.example.instagram;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             e.putString("profileId", publisherId);
             e.apply();
 
-//            tag = "profileFragment";
+            tag = "profileFragment";
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new ProfileFragment(), "profileFragment").commit();
         } else {
@@ -52,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new HomeFragment(), tag).commit();
         }
-
-        saveTag();
 
 
     }
@@ -118,14 +114,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadTag();
         updateIcons();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        saveTag();
     }
 
     private void updateIcons() {
@@ -183,20 +172,6 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.getMenu().getItem(4).setIcon(R.drawable.ic_profile_clicked);
         } else {
             bottomNavigationView.getMenu().getItem(4).setIcon(R.drawable.ic_profile);
-        }
-    }
-
-    private void saveTag() {
-        SharedPreferences.Editor editor = getSharedPreferences("TAG", Context.MODE_PRIVATE).edit();
-        editor.putString("tag", tag);
-        editor.apply();
-        Toast.makeText(getApplicationContext(), tag, Toast.LENGTH_SHORT).show();
-    }
-
-    private void loadTag() {
-        SharedPreferences prefs = getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        if (prefs.contains("tag")) {
-            tag = prefs.getString("tag", "");
         }
     }
 }
