@@ -76,7 +76,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // update post specs & show placeholder till load complete
         Glide.with(mContext).load(post.getImageUrl())
-                .apply(new RequestOptions().placeholder(R.drawable.imageplaceholder))
+                .apply(new RequestOptions().placeholder(R.drawable.placeholder))
                 .into(holder.postImage_iv);
         if (post.getDescription().equals("")) {
             holder.description_tv.setVisibility(View.GONE);
@@ -146,23 +146,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.profile_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("profileId", post.getPublisher());
-                editor.apply();
-
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new ProfileFragment()).commit();
+                openProfile(post);
             }
         });
         holder.username_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("profileId", post.getPublisher());
-                editor.apply();
-
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new ProfileFragment()).commit();
+                openProfile(post);
+            }
+        });
+        holder.publisher_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openProfile(post);
             }
         });
 
@@ -272,6 +268,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new PostDetailsFragment(), "PostDetailsFragment").commit();
         }
+    }
+
+    private void openProfile(Post post) {
+        SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+        editor.putString("profileId", post.getPublisher());
+        editor.apply();
+
+        ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new ProfileFragment(), "profileFragment").commit();
     }
 
     // on click like button
@@ -400,11 +405,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     // already saved
-                    save_iv.setImageResource(R.drawable.ic_save_black);
+                    save_iv.setImageResource(R.drawable.ic_saved);
                     save_iv.setTag("saved");
                 } else {
                     // press to save
-                    save_iv.setImageResource(R.drawable.ic_saved);
+                    save_iv.setImageResource(R.drawable.ic_save);
                     save_iv.setTag("save");
                 }
             }

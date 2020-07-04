@@ -24,8 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:text="Username"
             android:id="@+id/username_textview"/>
 
@@ -42,13 +41,17 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:background="@drawable/button_background"
-        android:textColor="@color/colorPrimary"
+
+        android:textColor="@color/white"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:text="Follow"
         android:id="@+id/follow_btn"/>
 
 
 
 </RelativeLayout>
+
+<!--    android:backgroundTint="@color/colorPrimary"-->

@@ -17,7 +17,7 @@
             android:layout_height="45dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/imageplaceholder"
+            android:src="@drawable/placeholder"
             android:id="@+id/storyImage_civ"/>
 
         <de.hdodenhof.circleimageview.CircleImageView

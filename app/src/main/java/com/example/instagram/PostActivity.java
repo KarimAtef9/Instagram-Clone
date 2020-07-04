@@ -57,7 +57,7 @@ public class PostActivity extends AppCompatActivity {
         closeImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PostActivity.this, MainActivity.class));
+                //startActivity(new Intent(PostActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -120,7 +120,8 @@ public class PostActivity extends AppCompatActivity {
 
                         progressDialog.dismiss();
 
-                        startActivity(new Intent(PostActivity.this, MainActivity.class));
+                        startActivity(new Intent(PostActivity.this, MainActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));  // to make only one Main activity
                         finish();
                     } else {
                         Toast.makeText(PostActivity.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
@@ -130,10 +131,12 @@ public class PostActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(PostActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             });
         } else {
             Toast.makeText(PostActivity.this, "No image selected!", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
     }
@@ -150,7 +153,7 @@ public class PostActivity extends AppCompatActivity {
             addedImageImageview.setImageURI(imageUri);
         } else {
             //Toast.makeText(this, "Post Failed!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(PostActivity.this, MainActivity.class));
+            //startActivity(new Intent(PostActivity.this, MainActivity.class));
             finish();
         }
 

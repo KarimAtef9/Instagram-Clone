@@ -65,6 +65,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // to make only one Main activity
                 intent.putExtra("publisherId", comment.getPublisher());
                 mContext.startActivity(intent);
             }
@@ -73,6 +74,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // to make only one Main activity
                 intent.putExtra("publisherId", comment.getPublisher());
                 mContext.startActivity(intent);
             }

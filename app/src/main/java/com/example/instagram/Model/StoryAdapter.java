@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.AddStoryActivity;
 import com.example.instagram.R;
 import com.example.instagram.StoryActivity;
@@ -127,9 +128,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                Glide.with(mContext).load(user.getImageUrl()).into(holder.storyImage_iv);
+                Glide.with(mContext).load(user.getImageUrl())
+                        .apply(new RequestOptions().placeholder(R.drawable.placeholder))
+                        .into(holder.storyImage_iv);
                 if (position != 0) {
-                    Glide.with(mContext).load(user.getImageUrl()).into(holder.seenStoryImage_iv);
+                    Glide.with(mContext).load(user.getImageUrl())
+                            .apply(new RequestOptions().placeholder(R.drawable.placeholder))
+                            .into(holder.seenStoryImage_iv);
                     holder.storyUsername_tv.setText(user.getUsername());
                 }
             }

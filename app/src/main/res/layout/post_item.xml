@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -33,16 +35,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/black"
                 android:id="@+id/username_textview"/>
 
         </LinearLayout>
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_image"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                android:id="@+id/post_image"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -70,7 +79,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_saved"
+                android:src="@drawable/ic_save"
                 android:id="@+id/save_imageview"/>
 
 
@@ -82,7 +91,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:id="@+id/likes_textview"/>
 
         <TextView
@@ -91,7 +100,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
+            android:text="username"
+            android:textColor="@color/black"
             android:id="@+id/publisher_textview"/>
 
         <TextView
@@ -99,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:id="@+id/description_textview"/>
 
         <TextView

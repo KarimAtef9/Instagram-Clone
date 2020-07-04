@@ -1,22 +1,28 @@
 package com.example.instagram.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,7 +51,7 @@ public class ProfileFragment extends Fragment {
 
     private TextView posts_tv, followers_tv, following_tv, username_tv, fullname_tv, bio_tv;
     private ImageView profileImage_iv, options_iv;
-    private Button edit_btn;
+    private Button edit_btn, follow_btn;
     private ImageButton photos_ibtn, saved_ibtn;
 
     private RecyclerView photosRecyclerView;
@@ -89,6 +95,7 @@ public class ProfileFragment extends Fragment {
         profileImage_iv = view.findViewById(R.id.profileImage_imageview);
         options_iv = view.findViewById(R.id.options_imageview);
         edit_btn = view.findViewById(R.id.editProfile_btn);
+        follow_btn = view.findViewById(R.id.follow_btn);
         photos_ibtn = view.findViewById(R.id.myPhotos_imageBtn);
         saved_ibtn = view.findViewById(R.id.saved_imageBtn);
 
@@ -126,21 +133,29 @@ public class ProfileFragment extends Fragment {
         if (profileId.equals(firebaseUser.getUid())) {
             // my profile
             edit_btn.setText("Edit Profile");
+            follow_btn.setVisibility(View.GONE);
         } else {
             // other profile
             setFollowButtonText();
             saved_ibtn.setVisibility(View.GONE);
+            edit_btn.setVisibility(View.GONE);
         }
 
 
 
-        // if my profile then edit ,, if other user then follow or unfollow
+        // my profile then edit
         edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edit_btn.getText().equals("Edit Profile")) {
-                    startActivity(new Intent(getContext(), EditProfileActivity.class));
-                } else if (edit_btn.getText().equals("Follow")) {
+                startActivity(new Intent(getContext(), EditProfileActivity.class));
+            }
+        });
+
+        // follow and unfollow
+        follow_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (follow_btn.getText().equals("Follow")) {
                     FirebaseDatabase.getInstance().getReference().child("Follow")
                             .child(firebaseUser.getUid()).child("Following")
                             .child(profileId).setValue(true);
@@ -150,7 +165,7 @@ public class ProfileFragment extends Fragment {
                             .child(firebaseUser.getUid()).setValue(true);
 
                     addNotification();
-                } else if (edit_btn.getText().equals("Following")) {
+                } else if (follow_btn.getText().equals("Following")) {
                     // already friends, then un-friend
                     FirebaseDatabase.getInstance().getReference().child("Follow")
                             .child(firebaseUser.getUid()).child("Following")
@@ -241,13 +256,30 @@ public class ProfileFragment extends Fragment {
     private void setFollowButtonText() {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Follow").child(firebaseUser.getUid()).child("Following");
+        // not single event to follow and unfollow many times
         databaseReference.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.v("Profile Fragment", "follow button status : "+ follow_btn);
+                Log.v("Profile Fragment", "context status : "+ getActivity());
+
+                if (getActivity() == null) {
+                    // needed to wait until profile image uploaded if changed (EditProfileActivity)
+                    return;
+                }
+
                 if (dataSnapshot.child(profileId).exists()) {
-                    edit_btn.setText("Following");
+                    follow_btn.setText("Following");
+                    follow_btn.setBackgroundResource(R.drawable.button_black);
+                    follow_btn.setBackgroundTintList(null);
+                    follow_btn.setTextColor(getResources().getColor(R.color.black));
+
                 } else {
-                    edit_btn.setText("Follow");
+                    follow_btn.setText("Follow");
+                    follow_btn.setBackgroundResource(R.drawable.button_background);
+                    follow_btn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity().getApplicationContext(), R.color.colorPrimary));
+                    follow_btn.setTextColor(getResources().getColor(R.color.white));
                 }
             }
 

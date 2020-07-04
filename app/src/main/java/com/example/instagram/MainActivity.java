@@ -41,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
             e.putString("profileId", publisherId);
             e.apply();
 
+            tag = "profileFragment";
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new ProfileFragment(), "profileFragment").commit();
         } else {
-            // open my profile
+            // open my homepage
+            tag = "homeFragment";
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment(), "homeFragment").commit();
+                    .replace(R.id.fragment_container, new HomeFragment(), tag).commit();
         }
 
 
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    setIcons(menuItem.getItemId());  // set icons
+
                     switch (menuItem.getItemId()) {
                         case R.id.home_nav:
                             selectedFragment = new HomeFragment();
@@ -68,9 +72,8 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.add_nav:
                             selectedFragment = null;
-                            tag = "";
                             startActivity(new Intent(MainActivity.this, PostActivity.class));
-                            finish();
+//                            finish();
                             break;
                         case R.id.favorite_nav:
                             selectedFragment = new NotificationFragment();
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment homeFragment = getSupportFragmentManager().findFragmentByTag("homeFragment");
-        Fragment postDetailsFragment = getSupportFragmentManager().findFragmentByTag("PostDetailsFragment");
+        //Fragment postDetailsFragment = getSupportFragmentManager().findFragmentByTag("PostDetailsFragment");
 
         if (homeFragment != null && homeFragment.isVisible()) {
             Log.v("Main Activity", "homeFragment status : "+homeFragment);
@@ -107,5 +110,81 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, new HomeFragment(), "homeFragment").commit();
             bottomNavigationView.setSelectedItemId(R.id.home_nav);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateIcons();
+    }
+
+    private void updateIcons() {
+        bottomNavigationView.getMenu().getItem(0).setIcon(R.drawable.ic_home);
+        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_search);
+        bottomNavigationView.getMenu().getItem(3).setIcon(R.drawable.ic_notification);
+        bottomNavigationView.getMenu().getItem(4).setIcon(R.drawable.ic_profile);
+
+        switch (tag) {
+            case "homeFragment":
+                bottomNavigationView.getMenu().getItem(0).setIcon(R.drawable.ic_home_clicked);
+                bottomNavigationView.getMenu().getItem(0).setChecked(true);
+                break;
+            case "PostDetailsFragment":
+                break;
+            case "searchFragment":
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_search_clicked);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+                break;
+            case "notificationFragment":
+                bottomNavigationView.getMenu().getItem(3).setIcon(R.drawable.ic_notification_clicked);
+                bottomNavigationView.getMenu().getItem(3).setChecked(true);
+                break;
+            case "profileFragment":
+                bottomNavigationView.getMenu().getItem(4).setIcon(R.drawable.ic_profile_clicked);
+                bottomNavigationView.getMenu().getItem(4).setChecked(true);
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    private void setIcons(int id) {
+        if (id == R.id.home_nav) {
+            bottomNavigationView.getMenu().getItem(0).setIcon(R.drawable.ic_home_clicked);
+        } else {
+            bottomNavigationView.getMenu().getItem(0).setIcon(R.drawable.ic_home);
+        }
+
+        if (id == R.id.search_nav) {
+            bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_search_clicked);
+        } else {
+            bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_search);
+        }
+
+        if (id == R.id.favorite_nav) {
+            bottomNavigationView.getMenu().getItem(3).setIcon(R.drawable.ic_notification_clicked);
+        } else {
+            bottomNavigationView.getMenu().getItem(3).setIcon(R.drawable.ic_notification);
+        }
+
+        if (id == R.id.profile_nav) {
+            bottomNavigationView.getMenu().getItem(4).setIcon(R.drawable.ic_profile_clicked);
+        } else {
+            bottomNavigationView.getMenu().getItem(4).setIcon(R.drawable.ic_profile);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("tag", tag);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        tag = savedInstanceState.getString("tag");
     }
 }

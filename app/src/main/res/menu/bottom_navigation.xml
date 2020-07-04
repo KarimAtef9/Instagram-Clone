@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_clicked"
         android:title=""
         android:id="@+id/home_nav"/>
 
@@ -12,12 +12,12 @@
         android:id="@+id/search_nav"/>
 
     <item
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/ic_add_image"
         android:title=""
         android:id="@+id/add_nav"/>
 
     <item
-        android:icon="@drawable/ic_favorite"
+        android:icon="@drawable/ic_notification"
         android:title=""
         android:id="@+id/favorite_nav"/>
 

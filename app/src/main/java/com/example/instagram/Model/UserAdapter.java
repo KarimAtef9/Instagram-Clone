@@ -1,8 +1,12 @@
 package com.example.instagram.Model;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -84,10 +91,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                     editor.apply();
 
                     ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new ProfileFragment()).commit();
+                            .replace(R.id.fragment_container, new ProfileFragment(), "profileFragment").commit();
                 } else {
                     // to open from followers activity
                     Intent intent = new Intent(mContext, MainActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // to make only one Main activity
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // to make only one Main activity
                     intent.putExtra("publisherId", user.getId());
                     mContext.startActivity(intent);
                 }
@@ -135,12 +144,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Follow").child(firebaseUser.getUid()).child("Following");
         databaseReference.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(userId).exists()) {
                     followBtn.setText("Following");
+                    followBtn.setBackgroundResource(R.drawable.button_black);
+                    followBtn.setBackgroundTintList(null);
+                    followBtn.setTextColor(ContextCompat.getColorStateList(mContext, R.color.black));
                 } else {
                     followBtn.setText("Follow");
+                    followBtn.setBackgroundResource(R.drawable.button_background);
+                    followBtn.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.colorPrimary));
+                    followBtn.setTextColor(ContextCompat.getColorStateList(mContext, R.color.white));
                 }
             }
 
