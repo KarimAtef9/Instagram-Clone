@@ -163,10 +163,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                 }
 
                 if (count > 0) {    // currently have active stories
-                    addStory_tv.setText("My Story");
+                    //addStory_tv.setText("My Story");
                     addStoryIcon.setVisibility(View.GONE);
                 } else {    // have no active stories
-                    addStory_tv.setText("Add story");
+                    //addStory_tv.setText("Add story");
                     addStoryIcon.setVisibility(View.VISIBLE);
                 }
             }

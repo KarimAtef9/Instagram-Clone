@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Settings"
         android:id="@+id/settings_tv"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/black"
         android:layout_margin="8dp"
         android:textSize="18sp"/>
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="Log Out"
         android:id="@+id/logout_tv"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/black"
         android:layout_margin="8dp"
         android:textSize="18sp"/>
 

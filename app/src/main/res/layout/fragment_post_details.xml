@@ -26,8 +26,8 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:maxLines="1"
-                    android:text="Photo"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Posts"
+                    android:textColor="@color/black"
                     android:id="@+id/username_textview"/>
 
 
