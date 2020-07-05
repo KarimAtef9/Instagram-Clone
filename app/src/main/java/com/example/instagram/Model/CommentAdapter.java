@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +35,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private Context mContext;
     private ArrayList<Comment> commentsList;
 
+    private String posterId;
     private String postId;
 
     private FirebaseUser firebaseUser;
 
-    public CommentAdapter(Context mContext, ArrayList<Comment> commentsList, String postId) {
+    public CommentAdapter(Context mContext, ArrayList<Comment> commentsList, String postId, String posterId) {
         this.mContext = mContext;
         this.commentsList = commentsList;
         this.postId = postId;
+        this.posterId = posterId;
     }
 
     @NonNull
@@ -146,12 +149,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             FirebaseDatabase.getInstance().getReference("Comments")
-                                    .child(postId).child(comment.getCommentId())
+                                    .child(posterId).child(postId).child(comment.getCommentId())
                                     .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {{
                                         Toast.makeText(mContext, "Comment Deleted", Toast.LENGTH_SHORT).show();
+                                        removeNotification(comment);
                                     }}
                                 }
                             });
@@ -160,5 +164,34 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                     });
             alertDialog.show();
         }
+    }
+
+
+    // remove comment notification when press unfollow
+    // called in delete post if task successful
+    private void removeNotification(final Comment comment) {
+        final DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Notifications").child(posterId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Notification notification = snapshot.getValue(Notification.class);
+                    Log.v("CommentAdapter", "comment status : " + comment);
+                    Log.v("CommentAdapter", "poster status : " + posterId);
+                    Log.v("CommentAdapter", "comment ID status : " + comment.getCommentId());
+
+                    if (notification.getUserId().equals(firebaseUser.getUid())
+                        && notification.getCommentId().equals(comment.getCommentId())) {
+                        reference.child(snapshot.getKey()).removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

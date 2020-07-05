@@ -6,13 +6,15 @@ public class Notification {
     private String posterId;
     private String postId;
     private boolean isPost;
+    private String commentId;
 
-    public Notification(String userId, String note, String posterId, String postId, boolean isPost) {
+    public Notification(String userId, String note, String posterId, String postId, boolean isPost, String commentId) {
         this.userId = userId;
         this.note = note;
         this.posterId = posterId;
         this.postId = postId;
         this.isPost = isPost;
+        this.commentId = commentId;
     }
 
     public Notification() {
@@ -56,5 +58,13 @@ public class Notification {
 
     public void setIsPost(boolean post) {
         isPost = post;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 }

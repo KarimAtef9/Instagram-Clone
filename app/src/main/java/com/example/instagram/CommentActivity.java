@@ -36,12 +36,13 @@ public class CommentActivity extends AppCompatActivity {
     private CommentAdapter commentAdapter;
     private ArrayList<Comment> commentsList;
 
-    private ImageView profile_imageview;
-    private TextView postComment_textview;
-    private EditText comment_edittext;
+    private ImageView profile_iv;
+    private TextView postComment_tv;
+    private EditText comment_et;
 
     private String postId;
     private String publisherId;
+    private String newCommentId;
 
     private FirebaseUser firebaseUser;
 
@@ -72,17 +73,17 @@ public class CommentActivity extends AppCompatActivity {
         commentsRecycleView.setLayoutManager(linearLayoutManager);
 
         commentsList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(this, commentsList, postId);
+        commentAdapter = new CommentAdapter(this, commentsList, postId, publisherId);
         commentsRecycleView.setAdapter(commentAdapter);
 
-        profile_imageview = findViewById(R.id.profile_imageview);
-        postComment_textview = findViewById(R.id.postComment_textview);
-        comment_edittext = findViewById(R.id.comment_edittext);
+        profile_iv = findViewById(R.id.profile_imageview);
+        postComment_tv = findViewById(R.id.postComment_textview);
+        comment_et = findViewById(R.id.comment_edittext);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // change Post button (textView) color on typing
-        comment_edittext.addTextChangedListener(new TextWatcher() {
+        comment_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -92,9 +93,9 @@ public class CommentActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // activate post button (textView)
                 if (charSequence.toString().trim().length() > 0) {
-                    postComment_textview.setTextColor(ContextCompat.getColor(CommentActivity.this, R.color.colorPrimary));
+                    postComment_tv.setTextColor(ContextCompat.getColor(CommentActivity.this, R.color.colorPrimary));
                 } else {
-                    postComment_textview.setTextColor(ContextCompat.getColor(CommentActivity.this, R.color.colorAccent));
+                    postComment_tv.setTextColor(ContextCompat.getColor(CommentActivity.this, R.color.colorAccent));
                 }
             }
 
@@ -104,10 +105,10 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
 
-        postComment_textview.setOnClickListener(new View.OnClickListener() {
+        postComment_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!comment_edittext.getText().toString().equals("")) {
+                if (!comment_et.getText().toString().equals("")) {
                     addComment();
                 }
             }
@@ -120,18 +121,20 @@ public class CommentActivity extends AppCompatActivity {
 
     // posting comment to database & add notification to publisher
     private void addComment() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postId);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Comments").child(publisherId).child(postId);
 
-        String commentId = reference.push().getKey();
+        newCommentId = reference.push().getKey();
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("comment", comment_edittext.getText().toString());
+        hashMap.put("comment", comment_et.getText().toString());
         hashMap.put("publisher", firebaseUser.getUid());
-        hashMap.put("commentId", commentId);
+        hashMap.put("commentId", newCommentId);
+        hashMap.put("posterId", publisherId);
 
-        reference.child(commentId).setValue(hashMap);
+        reference.child(newCommentId).setValue(hashMap);
         addNotification();
-        comment_edittext.setText("");
+        comment_et.setText("");
     }
 
     private void updateCommenterImage() {
@@ -141,7 +144,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Glide.with(getApplicationContext()).load(user.getImageUrl()).into(profile_imageview);
+                Glide.with(getApplicationContext()).load(user.getImageUrl()).into(profile_iv);
             }
 
             @Override
@@ -152,7 +155,8 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void readComments() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postId);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Comments").child(publisherId).child(postId);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -173,13 +177,18 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void addNotification() {
+        // don't send notification if i comment on my post
+        if (firebaseUser.getUid().equals(publisherId))
+            return;
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(publisherId);
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userId", firebaseUser.getUid());
-        hashMap.put("note", "commented: " +comment_edittext.getText().toString());
+        hashMap.put("note", "commented: " + comment_et.getText().toString());
         hashMap.put("posterId", publisherId);
         hashMap.put("postId", postId);
+        hashMap.put("commentId", newCommentId);
         hashMap.put("isPost", true);
 
         reference.push().setValue(hashMap);

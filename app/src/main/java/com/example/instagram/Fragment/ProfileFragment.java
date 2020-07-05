@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.EditProfileActivity;
 import com.example.instagram.FollowersActivity;
+import com.example.instagram.Model.Notification;
 import com.example.instagram.Model.PhotoInProfileAdapter;
 import com.example.instagram.Model.Post;
 import com.example.instagram.Model.User;
@@ -174,6 +175,8 @@ public class ProfileFragment extends Fragment {
                     FirebaseDatabase.getInstance().getReference().child("Follow")
                             .child(profileId).child("Followers")
                             .child(firebaseUser.getUid()).removeValue();
+
+                    removeNotification();
                 }
             }
         });
@@ -471,9 +474,33 @@ public class ProfileFragment extends Fragment {
         hashMap.put("note", "started following you");
         hashMap.put("posterId", "");
         hashMap.put("postId", "");
+        hashMap.put("commentId", "");
         hashMap.put("isPost", false);
 
         reference.push().setValue(hashMap);
+    }
+
+    // remove follow notification when press unfollow
+    private void removeNotification() {
+        final DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Notifications").child(profileId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Notification notification = snapshot.getValue(Notification.class);
+                    if (!notification.getIsPost() && notification.getUserId().equals(firebaseUser.getUid())) {
+                        reference.child(snapshot.getKey()).removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }

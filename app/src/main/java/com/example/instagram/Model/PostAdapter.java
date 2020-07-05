@@ -289,6 +289,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             // remove like
             FirebaseDatabase.getInstance().getReference()
                     .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).removeValue();
+            removeNotification(post.getPublisher(), post.getPostId());
         }
     }
 
@@ -306,6 +307,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     private void addNotification(String posterId, String postId) {
+        // don't send notification if i liked my post
+        if (firebaseUser.getUid().equals(posterId))
+            return;
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(posterId);
 
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -313,9 +318,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         hashMap.put("note", "liked your post");
         hashMap.put("posterId", posterId);
         hashMap.put("postId", postId);
+        hashMap.put("commentId", "");
         hashMap.put("isPost", true);
 
         reference.push().setValue(hashMap);
+    }
+
+    // remove like notification
+    private void removeNotification(final String posterId, final String postId) {
+        final DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Notifications").child(posterId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Notification notification = snapshot.getValue(Notification.class);
+                    // notification by me & is this post & like notification type
+                    if (notification.getUserId().equals(firebaseUser.getUid())
+                            && notification.getIsPost()  && notification.getPostId().equals(postId)
+                            && notification.getNote().equals("liked your post")) {
+                        reference.child(snapshot.getKey()).removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void updatePublisherInfo(final String userId, final TextView username_tv,
