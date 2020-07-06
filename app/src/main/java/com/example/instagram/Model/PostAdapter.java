@@ -19,7 +19,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -86,7 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // update below image items (likes comments buttons...)
         update_LikeButton_NoLikes(post.getPostId(), holder.like_iv, holder.likes_tv);
-        updateNumberOfComments(post.getPostId(), holder.comments_tv);
+        updateNumberOfComments(post.getPublisher(), post.getPostId(), holder.comments_tv);
         updateSaveButton(post.getPostId(), post.getPublisher(), holder.save_iv);
 
         // like & unlike post
@@ -356,10 +355,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                username_tv.setText(user.getUsername());
-                publisher_tv.setText(user.getUsername());
-                Glide.with(mContext).load(user.getImageUrl()).into(profile_iv);
+                if (mContext != null) {
+                    // needed to wait until profile image uploaded if changed (EditProfileActivity)
+                    User user = dataSnapshot.getValue(User.class);
+                    username_tv.setText(user.getUsername());
+                    publisher_tv.setText(user.getUsername());
+                    Glide.with(mContext).load(user.getImageUrl()).into(profile_iv);
+                }
             }
 
             @Override
@@ -400,8 +402,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 
     // update number of comments
-    private void updateNumberOfComments(String postId, final TextView comments_tv) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postId);
+    private void updateNumberOfComments(String postPublisher, String postId, final TextView comments_tv) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Comments").child(postPublisher).child(postId);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override

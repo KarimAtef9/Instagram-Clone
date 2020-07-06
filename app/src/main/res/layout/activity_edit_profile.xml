@@ -46,18 +46,17 @@
                     android:layout_toRightOf="@id/close_iv" />
 
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SAVE"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
-                    android:id="@+id/save_tv"/>
+                    android:src="@drawable/ic_done"
+                    android:id="@+id/save_iv"/>
+
 
 
             </RelativeLayout>
@@ -83,7 +82,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Photo"
+            android:text="Change profile photo"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:layout_gravity="center"
@@ -95,6 +94,7 @@
             android:layout_marginTop="20dp"
             app:met_floatingLabel="normal"
             android:hint="Name"
+            android:layout_marginBottom="8dp"
             android:id="@+id/fullName_met"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -102,6 +102,7 @@
             android:layout_height="wrap_content"
             app:met_floatingLabel="normal"
             android:hint="Username"
+            android:layout_marginBottom="8dp"
             android:id="@+id/username_met"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText

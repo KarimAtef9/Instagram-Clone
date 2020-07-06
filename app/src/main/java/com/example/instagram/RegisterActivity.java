@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            String userId = firebaseUser.getUid();
+                            final String userId = firebaseUser.getUid();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
                             HashMap<String, Object> hashMap = new HashMap<>();
@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
+                                        selfFollow(userId);
                                         progressDialog.dismiss();
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -120,5 +121,10 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-
+    // to follow himself to see his posts in home
+    private void selfFollow(String userId) {
+        FirebaseDatabase.getInstance().getReference().child("Follow")
+                .child(userId).child("Following")
+                .child(userId).setValue(false);
+    }
 }

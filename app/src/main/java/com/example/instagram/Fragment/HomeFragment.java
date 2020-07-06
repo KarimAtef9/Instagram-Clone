@@ -2,16 +2,15 @@ package com.example.instagram.Fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.example.instagram.Model.Post;
 import com.example.instagram.Model.PostAdapter;
@@ -154,6 +153,10 @@ public class HomeFragment extends Fragment {
                 storiesList.add(new Story("", firebaseUser.getUid(), "", 0, 0));
                 // stories of my followings
                 for (String userId: followingList) {
+                    // skip if my story
+                    if (userId.equals(firebaseUser.getUid()))
+                        continue;
+
                     int count = 0;
                     Story story = null;
                     for (DataSnapshot snapshot: dataSnapshot.child(userId).getChildren()) {

@@ -1,19 +1,22 @@
 package com.example.instagram;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.Model.User;
@@ -39,14 +42,19 @@ import java.util.HashMap;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private TextView save_tv, changePhoto_tv;
-    private ImageView close_iv, profileImage_iv;
+    private TextView changePhoto_tv;
+    private ImageView save_iv, close_iv, profileImage_iv;
     private MaterialEditText fullName_met, username_met, bio_met;
 
     private FirebaseUser firebaseUser;
 
     private Uri imageUri;
     private StorageTask uploadTask;
+
+    private String currentImageUrl;
+    final String placeholder = "https://firebasestorage.googleapis.com/v0/b/instagram-f3936" +
+            ".appspot.com/o/profileplaceholder.png?alt=media&token=" +
+            "ead92a2e-f6f6-45f9-9f45-96aacd925b1b";
 
     StorageReference storageReference;
 
@@ -57,7 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        save_tv = findViewById(R.id.save_tv);
+        save_iv = findViewById(R.id.save_iv);
         changePhoto_tv = findViewById(R.id.changePhoto_tv);
         close_iv = findViewById(R.id.close_iv);
         profileImage_iv = findViewById(R.id.profile_iv);
@@ -67,6 +75,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference("Profiles");
+
+        setCurrentImageUrl();
 
         // update current data of user profile
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -90,15 +100,23 @@ public class EditProfileActivity extends AppCompatActivity {
         changePhoto_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CropImage.activity().setAspectRatio(1, 1)
-                        .setCropShape(CropImageView.CropShape.OVAL).start(EditProfileActivity.this);
+                if (currentImageUrl.equals(placeholder))
+                    CropImage.activity().setAspectRatio(1, 1)
+                            .setCropShape(CropImageView.CropShape.OVAL)
+                            .start(EditProfileActivity.this);
+                else
+                    changeProfilePhoto();
             }
         });
         profileImage_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CropImage.activity().setAspectRatio(1, 1)
-                        .setCropShape(CropImageView.CropShape.OVAL).start(EditProfileActivity.this);
+                if (currentImageUrl.equals(placeholder))
+                    CropImage.activity().setAspectRatio(1, 1)
+                            .setCropShape(CropImageView.CropShape.OVAL)
+                            .start(EditProfileActivity.this);
+                else
+                    changeProfilePhoto();
             }
         });
 
@@ -109,7 +127,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        save_tv.setOnClickListener(new View.OnClickListener() {
+        save_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateProfile(fullName_met.getText().toString(),
@@ -133,9 +151,8 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        String extension = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+        String uriString = uri.toString();
+        String extension = uriString.substring(uriString.lastIndexOf(".") +1);
         return extension;
     }
 
@@ -181,6 +198,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         DatabaseReference reference = FirebaseDatabase.getInstance()
                                 .getReference("Users").child(firebaseUser.getUid());
 
+                        // delete previous image first if not placeholder
+                        deletePrevProfilePicture();
 
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("imageUrl", url);
@@ -205,6 +224,65 @@ public class EditProfileActivity extends AppCompatActivity {
             Toast.makeText(EditProfileActivity.this, "No image selected!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void deletePrevProfilePicture() {
+        if (!currentImageUrl.equals(placeholder))
+            FirebaseStorage.getInstance().getReferenceFromUrl(currentImageUrl).delete();
+    }
+
+    private void changeProfilePhoto() {
+        final AlertDialog alertDialog
+                = new AlertDialog.Builder(EditProfileActivity.this).create();
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Remove",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deletePrevProfilePicture();
+                        // locate image url in Users.userId
+                        DatabaseReference reference = FirebaseDatabase.getInstance()
+                                .getReference("Users").child(firebaseUser.getUid());
+
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("imageUrl", placeholder);
+
+                        // update profile image url in database
+                        reference.updateChildren(hashMap);
+
+                        dialogInterface.dismiss();
+                    }
+                });
+        // add new profile image
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "New profile photo",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        CropImage.activity().setAspectRatio(1, 1)
+                                .setCropShape(CropImageView.CropShape.OVAL)
+                                .start(EditProfileActivity.this);
+
+                        dialogInterface.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private void setCurrentImageUrl() {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Users").child(firebaseUser.getUid());
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                currentImageUrl = currentUser.getImageUrl();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // needed as dismissing it in uploadImage makes some errors
