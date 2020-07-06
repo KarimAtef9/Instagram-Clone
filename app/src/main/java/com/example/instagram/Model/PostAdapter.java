@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,9 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -90,17 +95,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // like & unlike post
         holder.like_iv.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                likePost(holder, post);
+                likePost(holder, post, false);
             }
         });
         // single click open post
         // double click to like & unlike post
         holder.postImage_iv.setOnClickListener(new DoubleClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onDoubleClick() {
-                likePost(holder, post);
+                likePost(holder, post, true);
             }
 
             @Override
@@ -230,6 +237,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profile_iv, postImage_iv, like_iv, comment_iv, save_iv, more_iv;
         TextView username_tv, likes_tv, publisher_tv, description_tv, comments_tv;
+        // like animation
+        ImageView like_av;
+        AnimatedVectorDrawableCompat avdCompat;
+        AnimatedVectorDrawable avd;
+        Drawable drawable;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -247,6 +259,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             comments_tv = itemView.findViewById(R.id.viewComments_textview);
 
             more_iv = itemView.findViewById(R.id.more_icon);
+
+            like_av = itemView.findViewById(R.id.like_av);
+            drawable = like_av.getDrawable();
 
         }
     }
@@ -278,12 +293,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     // on click like button
-    private void likePost(ViewHolder holder, Post post) {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void likePost(ViewHolder holder, Post post, boolean isDoubleClick) {
         // like post
         if (holder.like_iv.getTag().equals("like")) {
             FirebaseDatabase.getInstance().getReference()
                     .child("Likes").child(post.getPostId()).child(firebaseUser.getUid()).setValue(true);
             addNotification(post.getPublisher(), post.getPostId());
+            // show like animation if double click like
+            if (isDoubleClick)
+                likeAnimation(holder);
         } else {
             // remove like
             FirebaseDatabase.getInstance().getReference()
@@ -510,23 +529,67 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     // delete post from database and image from storage
-    private void deletePost(final String postId, final String publisherId, String imageUrl) {
-        FirebaseDatabase.getInstance().getReference("Posts")
-                .child(publisherId).child(postId).removeValue()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+    private void deletePost(final String postId, final String publisherId, final String imageUrl) {
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+        alertDialog.setTitle("Delete Post?");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
+                new DialogInterface.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Post Deleted", Toast.LENGTH_SHORT).show();
-                            mContext.startActivity(new Intent(mContext, MainActivity.class));
-                            ((Activity)mContext).finish();
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
                     }
                 });
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseDatabase.getInstance().getReference("Posts")
+                                .child(publisherId).child(postId).removeValue()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(mContext, "Post Deleted", Toast.LENGTH_SHORT).show();
+                                            mContext.startActivity(new Intent(mContext, MainActivity.class));
+                                            ((Activity)mContext).finish();
+                                        }
+                                    }
+                                });
 
-        // delete image from firebase storage
-        FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl).delete();
+                        // delete image from firebase storage
+                        FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl).delete();
+                        // remove likes, comments & notifications
+                        deletePostSpecs(postId, publisherId);
 
+                        dialogInterface.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    // remove likes, comments & notifications
+    private void deletePostSpecs(final String postId, final String publisherId) {
+        // delete likes & comments
+        FirebaseDatabase.getInstance().getReference("Comments").child(publisherId).child(postId).removeValue();
+        FirebaseDatabase.getInstance().getReference("Likes").child(postId).removeValue();
+
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(publisherId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Notification n = snapshot.getValue(Notification.class);
+                    if (n.getPostId().equals(postId)) {
+                        reference.child(snapshot.getKey()).removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void reportPost(final String postId, final String publisherId) {
@@ -543,9 +606,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         Toast.makeText(mContext, "Post Reported!", Toast.LENGTH_SHORT).show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void likeAnimation(ViewHolder holder) {
+        holder.like_av.setAlpha(0.70f);
+
+        if (holder.drawable instanceof  AnimatedVectorDrawableCompat) {
+            holder.avdCompat = (AnimatedVectorDrawableCompat) holder.drawable;
+            holder.avdCompat.start();
+        } else if (holder.drawable instanceof  AnimatedVectorDrawable) {
+            holder.avd = (AnimatedVectorDrawable) holder.drawable;
+            holder.avd.start();
+        }
+    }
+
     public abstract class DoubleClickListener implements View.OnClickListener {
 
-        private static final long DOUBLE_CLICK_TIME_DELTA = 180;//milliseconds
+        private static final long DOUBLE_CLICK_TIME_DELTA = 200;//milliseconds
 
         long lastClickTime = 0;
         private boolean doubleClicked = false;
