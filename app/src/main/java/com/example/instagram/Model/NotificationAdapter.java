@@ -106,7 +106,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     // update notifier info (profile & username)
     private void updateUserInfo(final ImageView profile, final TextView username, String publisherId) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(publisherId);
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -127,7 +127,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private void updatePostImage(final ImageView postImage, String posterId, final String postId) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("Posts").child(posterId).child(postId);
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
